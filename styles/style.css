@@ -46,7 +46,7 @@ header {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #165647 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--color-white);
     text-align: center;
     padding: var(--spacing-xl) var(--spacing-md);
@@ -178,4 +178,130 @@ footer {
 
 .section-padding-sm {
     padding: var(--spacing-lg) 0;
+}
+
+
+/* Hobbies e Intereses */
+.hobbies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.hobby-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.hobby-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hobby-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hobby-card h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+/* Certificaciones */
+.certifications-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.certification-card {
+    background: var(--light-green);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.certification-org {
+    color: var(--dark-green);
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.certification-date {
+    color: var(--dark-green);
+    font-size: 0.9rem;
+}
+
+.certification-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--persian-indigo);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.certification-link:hover {
+    text-decoration: underline;
+}
+
+/* Contacto */
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.contact-info h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.contact-details {
+    margin: 1.5rem 0;
+}
+
+.contact-item {
+    margin-bottom: 0.8rem;
+}
+
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .hobbies-container,
+    .certifications-container {
+        grid-template-columns: 1fr;
+    }
 }
