@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Juan Pérez",
+    "position": "Desarrollador en XYZ Corp",
+    "text": "Luis es un excelente profesional, siempre entrega a tiempo y con calidad. Su capacidad para resolver problemas es admirable."
+  },
+  {
+    "name": "María López",
+    "position": "Diseñadora en ABC Ltda",
+    "text": "Su creatividad y atención al detalle son impresionantes. Trabajar con Luis ha sido una experiencia muy enriquecedora."
+  },
+  {
+    "name": "Carlos García",
+    "position": "Gerente en 123 S.A.",
+    "text": "Recomiendo a Luis sin dudarlo, es un gran colaborador y siempre aporta ideas innovadoras en los proyectos."
+  }
+]

@@ -305,3 +305,103 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* Estilos para trabajos académicos */
+.academic-works-container {
+  margin-top: 2rem;
+}
+
+.course-section {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.course-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.works-list {
+  margin-top: 1.5rem;
+}
+
+.academic-work-card {
+  background: white;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.academic-work-card h4 {
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.academic-work-card a {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.academic-work-card a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para habilidades técnicas */
+.skills-container {
+  margin-top: 2rem;
+}
+
+.skill-category {
+  margin-bottom: 1.5rem;
+}
+
+.skill-category h4 {
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-item {
+  background: var(--light-green);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* Estilos para recomendaciones */
+.recommendations-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.recommendation-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recommendation-card h3 {
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.recommendation-card p:last-child {
+  font-style: italic;
+  margin-top: 1rem;
+  color: #555;
+}

@@ -1,0 +1,47 @@
+{
+  "courses": [
+    {
+      "code": "IC8057",
+      "name": "Introducción al Desarrollo de Páginas Web",
+      "semester": "I Semestre 2023",
+      "description": "Curso introductorio que cubre los fundamentos del desarrollo web, incluyendo HTML, CSS, JavaScript y principios de diseño responsivo.",
+      "works": [
+        {
+          "name": "Investigación sobre tendencias web",
+          "type": "investigación",
+          "description": "Análisis de las principales tendencias en desarrollo web para 2023.",
+          "date": "2023-03-15",
+          "technologies": ["HTML", "CSS"],
+          "repoLink": "#",
+          "demoLink": "#"
+        },
+        {
+          "name": "Portafolio personal",
+          "type": "proyecto",
+          "description": "Desarrollo de un portafolio web personal responsive.",
+          "date": "2023-04-20",
+          "technologies": ["HTML", "CSS", "JavaScript"],
+          "repoLink": "#",
+          "demoLink": "#"
+        }
+      ]
+    },
+    {
+      "code": "IC8058",
+      "name": "Programación Avanzada",
+      "semester": "I Semestre 2023",
+      "description": "Curso que profundiza en conceptos de programación orientada a objetos y estructuras de datos.",
+      "works": [
+        {
+          "name": "Sistema de gestión de inventarios",
+          "type": "proyecto",
+          "description": "Aplicación de consola para gestión de inventarios con persistencia de datos.",
+          "date": "2023-05-10",
+          "technologies": ["Python"],
+          "repoLink": "#",
+          "demoLink": "#"
+        }
+      ]
+    }
+  ]
+}

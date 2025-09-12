@@ -1,0 +1,17 @@
+[
+  {
+    "icon": "🎮",
+    "title": "Videojuegos",
+    "description": "Apasionado de los RPG y juegos de estrategia. Disfruto analizar mecánicas de juego y diseño de niveles."
+  },
+  {
+    "icon": "📺",
+    "title": "Series y Anime",
+    "description": "Fan de Juego de Tronos, anime y series de ciencia ficción. Me interesa el storytelling y desarrollo de personajes."
+  },
+  {
+    "icon": "🍳",
+    "title": "Cocina",
+    "description": "Disfruto experimentar con nuevas recetas y técnicas culinarias, especialmente platos internacionales y postres."
+  }
+]

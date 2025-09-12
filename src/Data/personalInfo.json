@@ -1,0 +1,152 @@
+{
+  "name": "Luis Carlos Trejos Rivera",
+  "title": "Estudiante de Ingeniería en Computación",
+  "bio": "Soy estudiante de Ingeniería en Computación en el Tecnológico de Costa Rica, apasionado por el desarrollo web y la tecnología. Con experiencia en liderazgo estudiantil como Presidente de ASOIC y Lider-Mentor en Integratec.",
+  "email": "luis.trejos10@gmail.com",
+  "phone": "+506 8433-3757",
+  "location": "Limón, Costa Rica",
+  "photo": "/images/profile.jpg",
+  "skills": [
+    {
+      "category": "Lenguajes de Programación",
+      "items": [
+        {
+          "name": "Python",
+          "level": 75
+        },
+        {
+          "name": "Java",
+          "level": 70
+        },
+        {
+          "name": "C#",
+          "level": 65
+        },
+        {
+          "name": "JavaScript",
+          "level": 80
+        },
+        {
+          "name": "HTML",
+          "level": 90
+        },
+        {
+          "name": "CSS",
+          "level": 85
+        }
+      ]
+    },
+    {
+      "category": "Herramientas de Oficina",
+      "items": [
+        {
+          "name": "Word",
+          "level": 90
+        },
+        {
+          "name": "Excel",
+          "level": 85
+        },
+        {
+          "name": "PowerPoint",
+          "level": 90
+        },
+        {
+          "name": "Outlook",
+          "level": 80
+        },
+        {
+          "name": "Teams",
+          "level": 85
+        },
+        {
+          "name": "SharePoint",
+          "level": 75
+        }
+      ]
+    },
+    {
+      "category": "Habilidades",
+      "items": [
+        {
+          "name": "Resolución de problemas",
+          "level": 85
+        },
+        {
+          "name": "Comunicación técnica",
+          "level": 80
+        },
+        {
+          "name": "Trabajo en equipo",
+          "level": 90
+        },
+        {
+          "name": "Liderazgo",
+          "level": 85
+        }
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "title": "HTML5 y CSS3 (Partes 1-4)",
+      "organization": "Alura Latam",
+      "date": "2023",
+      "certId": "ALURA-HTMLCSS-2023-001",
+      "link": "#"
+    },
+    {
+      "title": "Programación Lógica con JavaScript",
+      "organization": "Alura Latam",
+      "date": "2023",
+      "certId": "ALURA-JSLOGIC-2023-002",
+      "link": "#"
+    },
+    {
+      "title": "Formación en Desarrollo Personal G6 - ONE",
+      "organization": "Alura Latam",
+      "date": "2023",
+      "certId": "ALURA-DESARROLLO-2023-003",
+      "link": "#"
+    },
+    {
+      "title": "Aprender a Aprender: Técnicas para tu Autodesarrollo",
+      "organization": "Alura Latam",
+      "date": "2023",
+      "certId": "ALURA-APRENDER-2023-004",
+      "link": "#"
+    },
+    {
+      "title": "Operador en Tecnologías de Información y Comunicación (TIC)",
+      "organization": "INA",
+      "date": "2020",
+      "certId": "INA-TIC-2020-12345",
+      "link": "#"
+    },
+    {
+      "title": "Inglés Ejecutivo para Servicios",
+      "organization": "INA",
+      "date": "2020",
+      "certId": "INA-ENGLISH-2020-67890",
+      "link": "#"
+    },
+    {
+      "title": "Habilidades Blandas y Liderazgo para la Transformación",
+      "organization": "Mejores Costa Rica",
+      "date": "2022",
+      "certId": "MEJORES-LIDERAZGO-2022-001",
+      "link": "#"
+    },
+    {
+      "title": "Introducción a la Mentoría",
+      "organization": "TEC - Integratec",
+      "date": "2022",
+      "certId": "TEC-MENTORIA-2022-001",
+      "link": "#"
+    }
+  ],
+    "socialLinks": [
+    {"name": "GitHub", "url": "https://github.com/LuisK19"},
+    {"name": "LinkedIn", "url": "#"}
+  ]
+}
