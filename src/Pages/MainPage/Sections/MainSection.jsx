@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const MainSection = () => {
   const [personalInfo, setPersonalInfo] = useState(null);
@@ -103,7 +104,7 @@ const MainSection = () => {
         <div className="container">
           <h2 className="section-title">Certificaciones</h2>
           <div className="certifications-container">
-            {personalInfo.certifications.map((cert, index) => (
+            {personalInfo.certifications.slice(0, 3).map((cert, index) => ( // Muestra solo 3
               <div key={index} className="certification-card">
                 <h3>{cert.title}</h3>
                 <p className="certification-org">{cert.organization}</p>
@@ -112,12 +113,9 @@ const MainSection = () => {
               </div>
             ))}
           </div>
-          <a
-            href="/certificaciones"
-            className="btn btn-secondary"
-          >
+          <Link to="/CertificationsPage" className="btn btn-section">
             Ver todas mis certificaciones
-          </a>
+          </Link>
         </div>
       </section>
 

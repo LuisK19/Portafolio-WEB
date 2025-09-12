@@ -89,6 +89,11 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.btn-section {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+}
+
 /* Main content */
 main {
     flex: 1;
