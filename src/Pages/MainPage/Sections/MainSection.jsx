@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import SocialIcon from '../../../components/SocialIcon';
+import SocialLinks from '../../../components/SocialIcon';
 import { Link } from 'react-router-dom';
 
 const MainSection = () => {
@@ -9,22 +11,22 @@ const MainSection = () => {
 
   useEffect(() => {
     // Cargar datos desde los archivos JSON
-    fetch('src/Data/personalInfo.json')
+    fetch('/Data/personalInfo.json')
       .then(response => response.json())
       .then(data => setPersonalInfo(data))
       .catch(error => console.error('Error loading personal info:', error));
 
-    fetch('src/Data/academicWorks.json')
+    fetch('/Data/academicWorks.json')
       .then(response => response.json())
       .then(data => setAcademicWorks(data))
       .catch(error => console.error('Error loading academic works:', error));
 
-    fetch('src/Data/hobbies.json')
+    fetch('/Data/hobbies.json')
       .then(response => response.json())
       .then(data => setHobbiesData(data))
       .catch(error => console.error('Error loading hobbies:', error));
 
-    fetch('src/Data/recommendations.json')
+    fetch('/Data/recommendations.json')
       .then(response => response.json())
       .then(data => setRecommendations(data))
       .catch(error => console.error('Error loading recommendations:', error));
@@ -36,6 +38,8 @@ const MainSection = () => {
     subject: '',
     message: ''
   });
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,6 +65,10 @@ const MainSection = () => {
   if (!personalInfo || !academicWorks) {
     return <div>Cargando...</div>;
   }
+
+  const filteredSocialLinks = personalInfo.socialLinks.filter(social => 
+    social.icon === 'github' || social.icon === 'linkedin'
+  );
 
   return (
     <>
@@ -97,6 +105,9 @@ const MainSection = () => {
               </div>
             ))}
           </div>
+          <Link to="/academicWorks" className="btn btn-section">
+            Ver todos los trabajos académicos
+          </Link>
         </div>
       </section>
 
@@ -113,7 +124,7 @@ const MainSection = () => {
               </div>
             ))}
           </div>
-          <Link to="/CertificationsPage" className="btn btn-section">
+          <Link to="/certifications" className="btn btn-section">
             Ver todas mis certificaciones
           </Link>
         </div>
@@ -167,19 +178,7 @@ const MainSection = () => {
                   <strong>Ubicación:</strong> {personalInfo.location}
                 </div>
               </div>
-              <div className="social-links">
-                {personalInfo.socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    className="social-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {social.name}
-                  </a>
-                ))}
-              </div>
+              <SocialLinks personalInfo={{ ...personalInfo, socialLinks: filteredSocialLinks }} />
             </div>
             <div className="contact-form">
               <form onSubmit={handleSubmit}>

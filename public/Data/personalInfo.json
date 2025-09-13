@@ -145,8 +145,21 @@
       "link": "#"
     }
   ],
-    "socialLinks": [
-    {"name": "GitHub", "url": "https://github.com/LuisK19"},
-    {"name": "LinkedIn", "url": "#"}
+  "socialLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/LuisK19",
+      "icon": "github"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "#",
+      "icon": "linkedin"
+    },
+    {
+      "name": "Email",
+      "url": "mailto:luis.trejos10@gmail.com",
+      "icon": "email"
+    }
   ]
 }

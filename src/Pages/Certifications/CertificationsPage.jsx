@@ -7,7 +7,7 @@ const CertificationsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    fetch('/data/personalInfo.json')
+    fetch('/Data/personalInfo.json')
       .then(response => response.json())
       .then(data => {
         setCertifications(data.certifications);
@@ -21,7 +21,7 @@ const CertificationsPage = () => {
     if (category === 'all') {
       setFilteredCerts(certifications);
     } else {
-      setFilteredCerts(certifications.filter(cert => 
+      setFilteredCerts(certifications.filter(cert =>
         cert.organization.toLowerCase().includes(category.toLowerCase())
       ));
     }
@@ -39,12 +39,12 @@ const CertificationsPage = () => {
     <div className="certifications-page">
       <div className="container">
         <header className="certifications-header">
-          <Link to="/" className="back-btn">← Volver al Portafolio</Link>
           <h1>Mis Certificaciones</h1>
           <p>Documentación oficial de mis estudios, cursos y certificaciones obtenidas</p>
         </header>
 
         <div className="filters">
+          <p>Filtrar por categoría:</p>
           {categories.map(category => (
             <button
               key={category.id}
@@ -69,10 +69,10 @@ const CertificationsPage = () => {
               </div>
               <div className="cert-actions">
                 {cert.link && cert.link !== '#' ? (
-                  <a 
-                    href={cert.link} 
+                  <a
+                    href={cert.link}
                     className="view-cert-btn"
-                    target="_blank" 
+                    target="_blank"
                     rel="noopener noreferrer"
                   >
                     Ver Certificado
@@ -93,7 +93,10 @@ const CertificationsPage = () => {
 
         <footer className="certifications-footer">
           <p>Para verificar la autenticidad de estas certificaciones, contáctame directamente.</p>
+          <Link to="/" className="back-btn">← Volver al Portafolio</Link>
+
         </footer>
+
       </div>
     </div>
   );
