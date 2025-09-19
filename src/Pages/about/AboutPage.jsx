@@ -91,9 +91,10 @@ const exportToPDF = async () => {
     
     // Función para agregar texto con manejo de saltos de página
     const addText = (text, x, y, styles = {}) => {
-      const { fontSize = 12, fontStyle = 'normal', align = 'left', maxWidth = contentWidth } = styles;
+      const { fontSize = 12, fontStyle = 'normal', align = 'left', maxWidth = contentWidth, color = [0, 0, 0] } = styles;
       doc.setFontSize(fontSize);
       doc.setFont(undefined, fontStyle);
+      doc.setTextColor(...color); // Establecer color del texto
       
       const textLines = doc.splitTextToSize(text, maxWidth);
       if (y + textLines.length * (fontSize / 3) > doc.internal.pageSize.getHeight() - margin) {
@@ -117,11 +118,14 @@ const exportToPDF = async () => {
     doc.rect(0, 0, pageWidth, 50, 'F');
     
     doc.setFontSize(24);
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(255, 255, 255); // Texto blanco
     doc.text(personalInfo.name, margin, 25);
     
     doc.setFontSize(14);
     doc.text(personalInfo.title, margin, 35);
+    
+    // RESTABLECER COLOR DEL TEXTO A NEGRO para el contenido
+    doc.setTextColor(0, 0, 0);
     
     yPosition = 60;
 
@@ -245,7 +249,7 @@ const exportToPDF = async () => {
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
       doc.setFontSize(10);
-      doc.setTextColor(100, 100, 100);
+      doc.setTextColor(100, 100, 100); // Color gris para el pie de página
       doc.text(`Página ${i} de ${totalPages}`, pageWidth - margin, doc.internal.pageSize.getHeight() - 10, { align: 'right' });
       doc.text('CV generado desde mi portafolio personal', margin, doc.internal.pageSize.getHeight() - 10);
     }
