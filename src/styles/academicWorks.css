@@ -1,0 +1,142 @@
+.works-page{ 
+    min-height: 100vh;
+    background: linear-gradient(135deg, #3EBB9E 0%, var(--color-white) 100%);
+    padding: 2rem 0;
+}
+
+
+
+
+.works-header {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    padding: 1rem;
+    position:static;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+
+.works-header h1 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+}
+
+
+.works-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem;
+  padding: 1rem;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.filters p {
+  font-weight: 600;
+  color: #000000;
+  margin-right: 1rem;
+  align-self: center;
+}
+
+.filter-btn {
+  padding: 0.8rem 1.5rem;
+  border: 2px solid var(--primary-color);
+  background: white;
+  color: var(--primary-color);
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+
+
+.works-container {
+    margin-top: 1rem;
+}
+
+.course-section {
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: none;
+}
+
+.course-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.works-list {
+    margin-top: 1.5rem;
+}
+
+.work-card {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.work-card h4 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.work-card a {
+    display: inline-block;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.work-card a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+.works-footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--dark-green);
+  background-color: var(--color-white);
+  font-size: 0.9rem;
+  border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.works-footer p {
+  padding-bottom: 0.5rem;
+}
+
+.works-footer a {
+  color: var(--color-white);
+}
+
+

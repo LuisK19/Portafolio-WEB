@@ -2,7 +2,6 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 1rem;
     padding: 0 var(--spacing-md);
 }
 
@@ -47,7 +46,6 @@ header {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--color-white);
     text-align: center;
     padding: var(--spacing-xl) var(--spacing-md);
@@ -55,6 +53,28 @@ header {
     display: flex;
     align-items: center;
     min-height: calc(100vh - 140px);
+    background: linear-gradient(78deg, #00674f, #0a3c30);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 11s ease infinite;
+    -moz-animation: AnimationName 11s ease infinite;
+    animation: AnimationName 11s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 32%}
+    50%{background-position:100% 69%}
+    100%{background-position:0% 32%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 32%}
+    50%{background-position:100% 69%}
+    100%{background-position:0% 32%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 32%}
+    50%{background-position:100% 69%}
+    100%{background-position:0% 32%}
 }
 
 .hero .container {
@@ -106,47 +126,47 @@ footer {
     color: var(--color-white);
     text-align: center;
     padding: var(--spacing-md);
-    margin-top: auto;
+
 }
 
-    .menu-toggle {
-        display: block;
-        position: absolute;
-        top: var(--spacing-sm);
-        right: var(--spacing-sm);
-        background: none;
-        border: none;
-        color: var(--text-color);
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
+.menu-toggle {
+    display: block;
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 0 var(--spacing-sm);
     }
-    
+
     #main-nav ul {
         flex-direction: column;
         align-items: center;
         display: none;
     }
-    
+
     #main-nav.active ul {
         display: flex;
     }
-    
+
     #main-nav li {
         margin: var(--spacing-xs) 0;
         width: 100%;
         text-align: center;
     }
-    
+
     .hero {
         padding: var(--spacing-lg) var(--spacing-sm);
     }
-    
+
     .menu-toggle {
         display: block;
         position: absolute;
@@ -164,10 +184,20 @@ footer {
     .menu-toggle {
         display: none;
     }
-    
+
     #main-nav ul {
         display: flex !important;
     }
+
+    #about .section {
+        scroll-margin-top: 80px;
+        /* Header delgado */
+    }
+
+    #about .container {
+        margin-top: 40px;
+    }
+
 }
 
 /* Para pantallas muy grandes (más de 1600px) */
@@ -263,6 +293,7 @@ footer {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .contact-info h3 {
@@ -305,7 +336,7 @@ footer {
     .contact-container {
         grid-template-columns: 1fr;
     }
-    
+
     .hobbies-container,
     .certifications-container {
         grid-template-columns: 1fr;
@@ -314,174 +345,159 @@ footer {
 
 /* Estilos para trabajos académicos */
 .academic-works-container {
-  margin-top: 1rem;
+    margin-top: 1rem;
 }
 
-.course-section {
-  margin-bottom: 3rem;
-  padding: 1.5rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-}
-
-.course-section h3 {
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-}
-
-.works-list {
-  margin-top: 1.5rem;
-}
 
 .academic-work-card {
-  background: white;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .academic-work-card h4 {
-  color: var(--secondary-color);
-  margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
 }
 
 .academic-work-card a {
-  display: inline-block;
-  margin-right: 1rem;
-  margin-top: 0.5rem;
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
+    display: inline-block;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
 }
 
 .academic-work-card a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* Estilos para habilidades técnicas */
 .skills-container {
-  margin-top: 2rem;
+    margin-top: 2rem;
 }
 
 .skill-category {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .skill-category h4 {
-  color: var(--secondary-color);
-  margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
 }
 
 .skill-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .skill-item {
-  background: var(--light-green);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
+    background: var(--light-green);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
 }
 
 /* Estilos para recomendaciones */
 .recommendations-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
 }
 
 .recommendation-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .recommendation-card h3 {
-  color: var(--secondary-color);
-  margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
 }
 
 .recommendation-card p:last-child {
-  font-style: italic;
-  margin-top: 1rem;
-  color: #555;
+    font-style: italic;
+    margin-top: 1rem;
+    color: #555;
 }
 
 
 .social-container {
-  margin-top: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .social-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
 .social-link {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.8rem 1.2rem;
-  background: var(--primary-color);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.2rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
 .social-link:hover {
-  background: var(--secondary-color);
-  transform: translateX(5px);
-  border-color: rgba(255, 255, 255, 0.2);
+    background: var(--secondary-color);
+    transform: translateX(5px);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .social-ant-icon {
-  font-size: 1.5rem;
-  color: white;
-  transition: transform 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .social-link:hover .social-ant-icon {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .social-text {
-  font-weight: 500;
+    font-weight: 500;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .social-link {
-    padding: 0.7rem 1rem;
-  }
-  
-  .social-ant-icon {
-    font-size: 1.5rem;
-  }
+    .social-link {
+        padding: 0.7rem 1rem;
+    }
+
+    .social-ant-icon {
+        font-size: 1.5rem;
+    }
 }
 
 .loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  font-size: 1.2rem;
-  color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.2rem;
+    color: var(--text-color);
 }
 
 .social-container .loading {
-  height: auto;
-  padding: 1rem;
-  text-align: center;
+    height: auto;
+    padding: 1rem;
+    text-align: center;
 }
 
 
@@ -491,7 +507,9 @@ footer {
 
 
 /* Estados de carga y error */
-.loading, .error, .no-data {
+.loading,
+.error,
+.no-data {
     text-align: center;
     padding: 3rem;
     color: var(--text-color);
@@ -521,8 +539,12 @@ footer {
     margin-bottom: 0.5rem;
 }
 
-.academic-works-container {
-    margin-bottom: 3rem;
+#trabajos-academicos .section-title {
+    margin-bottom: 1rem;
+}
+
+#trabajos-academicos .btn-section{
+margin-top: 1rem;
 }
 
 .course-section {
@@ -585,4 +607,68 @@ footer {
 
 .back-btn:hover {
     background: var(--secondary-color);
+}
+
+
+
+
+
+
+/* Header en página principal cuando se hace scroll */
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+
+
+/* Estilos para el botón de toggle */
+.toggle-works-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    margin-top: 0.7rem;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--color-white);
+    transition: background-color 0.3s;
+    box-shadow: var(--shadow);
+    font-size: 1rem;
+}
+
+.toggle-works-btn:hover {
+    background-color: var(--hover-primary-color);
+}
+
+/* Estilo para el ícono del botón */
+.toggle-works-btn .icon {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333;
+    transition: transform 0.3s;
+}
+
+.toggle-works-btn .icon.expanded {
+    transform: rotate(180deg);
+}
+
+/* Estilos para la lista de trabajos */
+.works-list {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.works-list.collapsed {
+    max-height: 0;
+    margin: 0;
+}
+
+.works-list.expanded {
+    max-height: 1000px;/
 }

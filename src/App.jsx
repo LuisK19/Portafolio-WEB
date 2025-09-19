@@ -3,14 +3,27 @@ import Hero from './Pages/MainPage/Sections/Hero';
 import MainSection from './Pages/MainPage/Sections/MainSection';
 import Footer from './components/Layout/Footer';
 import CertificationsPage from './Pages/Certifications/CertificationsPage';
-import AcademicWorksPage from './Pages/AcademicWorks/AcademinWorksPage';
+import AcademicWorksPage from './Pages/AcademicWorks/AcademicWorksPage';
 import { Routes, Route } from 'react-router-dom';
 import './styles/base.css';
 import './styles/style.css';
 
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 function App() {
+  const ScrollToTop = () => {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+    return null;
+  };
+
   return (
     <div className="App">
+      <ScrollToTop />
       <Header />
       <main>
         <Routes>

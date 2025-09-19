@@ -6,6 +6,7 @@
 
 :root {
     --primary-color: #00674F;
+    --hover-primary-color: #3A9776;
     --secondary-color: #0A3C30;
 
     --accent-color: #3ebb9e;
@@ -49,5 +50,6 @@ body {
 }
 
 section {
-    padding: var(--spacing-lg) 0;
+    padding: 0;
+    padding-top: var(--spacing-lg);
 }

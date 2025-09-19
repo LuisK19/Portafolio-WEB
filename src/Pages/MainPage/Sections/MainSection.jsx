@@ -8,6 +8,7 @@ const MainSection = () => {
   const [academicWorks, setAcademicWorks] = useState(null);
   const [hobbiesData, setHobbiesData] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     // Cargar datos desde los archivos JSON
@@ -62,11 +63,15 @@ const MainSection = () => {
     });
   };
 
+  const toggleWorksList = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   if (!personalInfo || !academicWorks) {
     return <div>Cargando...</div>;
   }
 
-  const filteredSocialLinks = personalInfo.socialLinks.filter(social => 
+  const filteredSocialLinks = personalInfo.socialLinks.filter(social =>
     social.icon === 'github' || social.icon === 'linkedin'
   );
 
@@ -82,29 +87,38 @@ const MainSection = () => {
       <section id="trabajos-academicos" className="section">
         <div className="container">
           <h2 className="section-title">Trabajos Académicos</h2>
-          <div className="academic-works-container">
-            {academicWorks.courses.map((course, index) => (
-              <div key={index} className="course-section">
-                <h3>{course.code} - {course.name}</h3>
-                <p><strong>Semestre:</strong> {course.semester}</p>
-                <p>{course.description}</p>
+          {academicWorks.courses.slice(0, 1).map((course, index) => (
+            <div key={index} className="course-section">
+              <h3>{course.code} - {course.name}</h3>
+              <p><strong>Semestre:</strong> {course.semester}</p>
+              <p>{course.description}</p>
 
-                <div className="works-list">
-                  {course.works.map((work, workIndex) => (
-                    <div key={workIndex} className="academic-work-card">
-                      <h4>{work.name}</h4>
-                      <p><strong>Tipo:</strong> {work.type}</p>
-                      <p>{work.description}</p>
-                      <p><strong>Fecha:</strong> {work.date}</p>
-                      <p><strong>Tecnologías:</strong> {work.technologies.join(', ')}</p>
-                      {work.repoLink && <a href={work.repoLink} target="_blank" rel="noopener noreferrer">Repositorio</a>}
-                      {work.demoLink && <a href={work.demoLink} target="_blank" rel="noopener noreferrer">Sitio web</a>}
-                    </div>
-                  ))}
-                </div>
+
+              <button
+                className='toggle-works-btn'
+                onClick={toggleWorksList}
+                aria-expanded={isExpanded}
+              >
+                {isExpanded ? 'Ocultar trabajos' : 'Mostrar trabajos'}
+                <span>{isExpanded ? '▼' : '►'}</span>
+              </button>
+
+              <div className={`works-list ${isExpanded ? 'expanded' : 'collapsed'}`}>
+
+                {course.works.slice(0, 2).map((work, workIndex) => (
+                  <div key={workIndex} className="academic-work-card">
+                    <h4>{work.name}</h4>
+                    <p><strong>Tipo:</strong> {work.type}</p>
+                    <p>{work.description}</p>
+                    <p><strong>Fecha:</strong> {work.date}</p>
+                    <p><strong>Tecnologías:</strong> {work.technologies.join(', ')}</p>
+                    {work.repoLink && <a href={work.repoLink} target="_blank" rel="noopener noreferrer">Repositorio</a>}
+                    {work.demoLink && <a href={work.demoLink} target="_blank" rel="noopener noreferrer">Sitio web</a>}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
           <Link to="/academicWorks" className="btn btn-section">
             Ver todos los trabajos académicos
           </Link>

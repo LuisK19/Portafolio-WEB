@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './styles/base.css'
 import './styles/style.css'
 import './styles/certifications.css';
+import './styles/academicWorks.css';
 
 
 
