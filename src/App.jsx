@@ -4,6 +4,7 @@ import MainSection from './Pages/MainPage/Sections/MainSection';
 import Footer from './components/Layout/Footer';
 import CertificationsPage from './Pages/Certifications/CertificationsPage';
 import AcademicWorksPage from './Pages/AcademicWorks/AcademicWorksPage';
+import AboutPage from './Pages/about/AboutPage';
 import { Routes, Route } from 'react-router-dom';
 import './styles/base.css';
 import './styles/style.css';
@@ -33,6 +34,7 @@ function App() {
               <MainSection />
             </>
           } />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
           <Route path="/academicWorks" element={<AcademicWorksPage />} />
         </Routes>

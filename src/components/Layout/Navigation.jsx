@@ -5,12 +5,12 @@ const Navigation = () => {
   return (
     <ul>
       <li><Link to="/">Inicio</Link></li>
-      <li> <a href='/#about'>Sobre Mí</a></li>
+      <li><Link to="/about">Sobre Mí</Link></li>
       <li><Link to="/academicWorks">Trabajos</Link></li>
-      <li> <a href='/#recomendaciones'>Recomendaciones</a></li>
-      <li> <a href='/#hobbies'>Hobbies</a></li>
+      <li><a href='/#recomendaciones'>Recomendaciones</a></li>
+      <li><a href='/#hobbies'>Hobbies</a></li>
       <li><Link to="/certifications">Certificaciones</Link></li>
-      <li> <a href='/#contacto'>Contacto</a></li>
+      <li><a href='/#contacto'>Contacto</a></li>
     </ul>
   );
 };
