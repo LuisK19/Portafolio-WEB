@@ -16,6 +16,7 @@ header {
 
 #main-nav {
     padding: var(--spacing-sm) 0;
+    position: relative;
 }
 
 #main-nav ul {
@@ -139,66 +140,10 @@ footer {
     color: var(--text-color);
     font-size: 1.5rem;
     cursor: pointer;
+    margin-top: -15px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 var(--spacing-sm);
-    }
 
-    #main-nav ul {
-        flex-direction: column;
-        align-items: center;
-        display: none;
-    }
-
-    #main-nav.active ul {
-        display: flex;
-    }
-
-    #main-nav li {
-        margin: var(--spacing-xs) 0;
-        width: 100%;
-        text-align: center;
-    }
-
-    .hero {
-        padding: var(--spacing-lg) var(--spacing-sm);
-    }
-
-    .menu-toggle {
-        display: block;
-        position: absolute;
-        top: var(--spacing-sm);
-        right: var(--spacing-sm);
-        background: none;
-        border: none;
-        color: var(--secondary-color);
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-}
-
-@media (min-width: 769px) {
-    .menu-toggle {
-        display: none;
-    }
-
-    #main-nav ul {
-        display: flex !important;
-    }
-
-    #about .section {
-        scroll-margin-top: 80px;
-        /* Header delgado */
-    }
-
-    #about .container {
-        margin-top: 40px;
-    }
-
-}
 
 /* Para pantallas muy grandes (más de 1600px) */
 @media (min-width: 1600px) {
@@ -671,4 +616,50 @@ margin-top: 1rem;
 
 .works-list.expanded {
     max-height: 1000px;/
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+
+    #main-nav {
+        padding: var(--spacing-md) 0 var(--spacing-sm) 0; /* Más espacio en la parte superior */
+    }
+
+    #main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        display: none;
+    }
+
+    #main-nav.active ul {
+        display: flex;
+    }
+
+    #main-nav li {
+        margin: var(--spacing-xs) 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: var(--spacing-sm);
+        right: 0;
+        background: none;
+        border: none;
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101; 
+        padding: var(--spacing-xs);
+        margin-top: -16px;
+    }
 }

@@ -11,7 +11,7 @@ const AcademicWorksPage = () => {
     const [expandedCourses, setExpandedCourses] = useState({});
     const [courseFilters, setCourseFilters] = useState({});
     const [globalFilters, setGlobalFilters] = useState({
-        course: [], // Nuevo: filtro global por cursos
+        course: [], 
         dateRange: { start: '', end: '' }
     });
     const [filterMenuExpanded, setFilterMenuExpanded] = useState(false);
