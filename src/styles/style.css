@@ -663,3 +663,260 @@ margin-top: 1rem;
         margin-top: -16px;
     }
 }
+
+
+
+/* Goals Section Styles */
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.goal-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.goal-card:hover {
+  transform: translateY(-5px);
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.goal-header h3 {
+  color: var(--secondary-color);
+  margin: 0;
+  flex: 1;
+}
+
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.status-completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-progress {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-planned {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.goal-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.goal-category, .goal-timeline {
+  background-color: var(--light-green);
+  color: var(--dark-green);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.goal-description {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.goal-actions h4 {
+  color: var(--secondary-color);
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.goal-actions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.goal-actions li {
+  padding: 0.3rem 0;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.goal-actions li:before {
+  content: "•";
+  color: var(--primary-color);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.goal-progress {
+  margin-top: 1.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Achievements Section Styles */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.achievement-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.achievement-card:hover {
+  transform: translateY(-5px);
+}
+
+.achievement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.achievement-header h3 {
+  color: var(--secondary-color);
+  margin: 0;
+  flex: 1;
+}
+
+.category-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.category-academic {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.category-competition {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.category-personal {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.achievement-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.achievement-organization {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.achievement-date {
+  color: #666;
+  font-style: italic;
+}
+
+.achievement-description {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.achievement-technologies h4 {
+  color: var(--secondary-color);
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.technologies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.technology-tag {
+  background-color: var(--light-green);
+  color: var(--dark-green);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .goals-grid,
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .goal-header,
+  .achievement-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .status-badge {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+  
+  .achievement-meta {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}

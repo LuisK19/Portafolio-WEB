@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "title": "Desarrollo Full Stack",
+    "category": "Tecnológico",
+    "timeline": "Corto Plazo (6 meses)",
+    "description": "Dominio de React, Node.js y bases de datos para desarrollo de aplicaciones completas.",
+    "actions": [
+      "Completar 2 proyectos full stack",
+      "Aprender autenticación JWT",
+      "Dominar deployment en la nube"
+    ],
+    "status": "En progreso"
+  },
+  {
+    "id": 2,
+    "title": "Especialización en Inteligencia Artificial",
+    "category": "Académico",
+    "timeline": "Mediano Plazo (1-2 años)",
+    "description": "Profundizar en machine learning y data science aplicado a problemas reales.",
+    "actions": [
+      "Cursos especializados en Coursera/edX",
+      "Proyectos de análisis de datos",
+      "Participación en competencias de Kaggle"
+    ],
+    "status": "Planificado"
+  },
+  {
+    "id": 3,
+    "title": "Internacionalización",
+    "category": "Profesional",
+    "timeline": "Largo Plazo (3+ años)",
+    "description": "Oportunidades de trabajo o estudio en el extranjero para ampliar perspectivas.",
+    "actions": [
+      "Mejorar inglés técnico",
+      "Investigación de programas de intercambio",
+      "Networking con profesionales internacionales"
+    ],
+    "status": "Planificado"
+  }
+]

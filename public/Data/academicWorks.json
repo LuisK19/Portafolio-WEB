@@ -7,37 +7,91 @@
       "description": "Curso introductorio que cubre los fundamentos del desarrollo web, incluyendo HTML, CSS, JavaScript y principios de diseño responsivo.",
       "works": [
         {
-          "name": "Investigación sobre tendencias web",
-          "type": "investigación",
-          "description": "Análisis de las principales tendencias en desarrollo web para 2023.",
+          "name": "Laboratorio 1 - Investigación Desarrollo Web Moderno",
+          "type": "laboratorio",
+          "description": "Investigación y documentación de herramientas modernas utilizadas en el desarrollo web profesional.",
           "date": "2023-03-15",
-          "technologies": ["HTML", "CSS"],
+          "technologies": ["HTML", "Markdown", "Netlify"],
           "repoLink": "#",
           "demoLink": "#"
         },
         {
-          "name": "Portafolio personal",
-          "type": "proyecto",
-          "description": "Desarrollo de un portafolio web personal responsive.",
+          "name": "Laboratorio 2 - Estructura Semántica y Accesibilidad",
+          "type": "laboratorio",
+          "description": "Creación de sitio web con estructura semántica HTML5 y prácticas de accesibilidad.",
+          "date": "2023-04-01",
+          "technologies": ["HTML5", "CSS", "Accesibilidad", "WAI-ARIA"],
+          "repoLink": "#",
+          "demoLink": "#"
+        },
+        {
+          "name": "Laboratorio 3 - Selectores, Box Model y Positioning",
+          "type": "laboratorio",
+          "description": "Aplicación de técnicas avanzadas de CSS3 con selectores, modelo de caja y posicionamiento.",
           "date": "2023-04-20",
-          "technologies": ["HTML", "CSS", "JavaScript"],
+          "technologies": ["CSS3", "Flexbox", "Grid", "Positioning"],
+          "repoLink": "#",
+          "demoLink": "#"
+        },
+        {
+          "name": "Laboratorio 4 - Accesibilidad Web",
+          "type": "laboratorio",
+          "description": "Análisis de problemas de accesibilidad y priorización de soluciones basadas en principios POUR.",
+          "date": "2023-05-05",
+          "technologies": ["Accesibilidad", "WCAG", "POUR"],
+          "repoLink": "#",
+          "demoLink": "#"
+        },
+        {
+          "name": "Laboratorio 5 - Diseño Responsive",
+          "type": "laboratorio",
+          "description": "Conversión del sitio a diseño responsive con tres breakpoints (móvil, tablet, desktop).",
+          "date": "2023-05-20",
+          "technologies": ["Responsive Design", "Media Queries", "CSS Grid", "Flexbox"],
+          "repoLink": "#",
+          "demoLink": "#"
+        },
+        {
+          "name": "Proyecto 1 - Plataforma Bancaria",
+          "type": "proyecto",
+          "description": "Prototipo visual de plataforma bancaria online con formularios, dashboard y módulos de cuentas.",
+          "date": "2023-06-10",
+          "technologies": ["HTML", "CSS", "JavaScript", "Responsive Design"],
+          "repoLink": "#",
+          "demoLink": "#"
+        },
+        {
+          "name": "Portafolio del Curso",
+          "type": "proyecto",
+          "description": "Desarrollo incremental de portafolio web personal con trabajos académicos y perfil profesional.",
+          "date": "2023-06-28",
+          "technologies": ["HTML", "CSS", "JavaScript", "JSON", "Responsive"],
           "repoLink": "#",
           "demoLink": "#"
         }
       ]
     },
     {
-      "code": "IC8058",
-      "name": "Programación Avanzada",
+      "code": "IC4302",
+      "name": "Bases de Datos II",
       "semester": "I Semestre 2023",
-      "description": "Curso que profundiza en conceptos de programación orientada a objetos y estructuras de datos.",
+      "description": "Curso avanzado de bases de datos que cubre replicación, APIs, y sistemas de bases de datos distribuidas.",
       "works": [
         {
-          "name": "Sistema de gestión de inventarios",
-          "type": "proyecto",
-          "description": "Aplicación de consola para gestión de inventarios con persistencia de datos.",
-          "date": "2023-05-10",
-          "technologies": ["Python"],
+          "name": "Tarea 1 - API para SQL Server",
+          "type": "tarea",
+          "description": "Creación de API RESTful para comunicación con base de datos AdventureWorks en SQL Server.",
+          "date": "2023-09-14",
+          "technologies": ["SQL Server", "Node.js", "REST API", "Linux", "CRUD"],
+          "repoLink": "#",
+          "demoLink": "#"
+        },
+        {
+          "name": "Investigación - Replicaciones SQL Server",
+          "type": "investigación",
+          "description": "Configuración de replicaciones entre bases de datos AdventureWorks para tablas de producción.",
+          "date": "2023-09-23",
+          "technologies": ["SQL Server", "Replicación", "AdventureWorks", "Production Tables"],
           "repoLink": "#",
           "demoLink": "#"
         }

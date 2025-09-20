@@ -8,10 +8,11 @@ const MainSection = () => {
   const [academicWorks, setAcademicWorks] = useState(null);
   const [hobbiesData, setHobbiesData] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [goalsData, setGoalsData] = useState([]);
+  const [achievementsData, setAchievementsData] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    // Cargar datos desde los archivos JSON
     fetch('/Data/personalInfo.json')
       .then(response => response.json())
       .then(data => setPersonalInfo(data))
@@ -31,6 +32,16 @@ const MainSection = () => {
       .then(response => response.json())
       .then(data => setRecommendations(data))
       .catch(error => console.error('Error loading recommendations:', error));
+
+    fetch('/Data/goals.json')
+      .then(response => response.json())
+      .then(data => setGoalsData(data))
+      .catch(error => console.error('Error loading goals:', error));
+
+    fetch('/Data/achievements.json')
+      .then(response => response.json())
+      .then(data => setAchievementsData(data))
+      .catch(error => console.error('Error loading achievements:', error));
   }, []);
 
   const [formData, setFormData] = useState({
@@ -40,7 +51,23 @@ const MainSection = () => {
     message: ''
   });
 
+  const getStatusClass = (status) => {
+    switch (status) {
+      case 'Completado': return 'status-completed';
+      case 'En progreso': return 'status-progress';
+      case 'Planificado': return 'status-planned';
+      default: return '';
+    }
+  };
 
+  const getCategoryClass = (category) => {
+    switch (category) {
+      case 'Académico': return 'category-academic';
+      case 'Competencia': return 'category-competition';
+      case 'Desarrollo Personal': return 'category-personal';
+      default: return '';
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -153,6 +180,93 @@ const MainSection = () => {
                 <div className="hobby-icon">{hobby.icon}</div>
                 <h3>{hobby.title}</h3>
                 <p>{hobby.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="goals" className="section">
+        <div className="container">
+          <h2 className="section-title">Metas y Plan de Desarrollo</h2>
+          <p className="section-subtitle">Mi visión profesional y plan de crecimiento a futuro</p>
+
+          <div className="goals-grid">
+            {goalsData.map(goal => (
+              <div key={goal.id} className="goal-card">
+                <div className="goal-header">
+                  <h3>{goal.title}</h3>
+                  <span className={`status-badge ${getStatusClass(goal.status)}`}>
+                    {goal.status}
+                  </span>
+                </div>
+
+                <div className="goal-meta">
+                  <span className="goal-category">{goal.category}</span>
+                  <span className="goal-timeline">{goal.timeline}</span>
+                </div>
+
+                <p className="goal-description">{goal.description}</p>
+
+                <div className="goal-actions">
+                  <h4>Acciones planificadas:</h4>
+                  <ul>
+                    {goal.actions.map((action, index) => (
+                      <li key={index}>{action}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="goal-progress">
+                  <div className="progress-bar">
+                    <div
+                      className={`progress-fill ${getStatusClass(goal.status)}`}
+                      style={{
+                        width:
+                          goal.status === 'Completado' ? '100%' :
+                            goal.status === 'En progreso' ? '50%' : '10%'
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="achievements" className="section">
+        <div className="container">
+          <h2 className="section-title">Logros y Reconocimientos</h2>
+          <p className="section-subtitle">Mis principales méritos y distinciones</p>
+
+          <div className="achievements-grid">
+            {achievementsData.map(achievement => (
+              <div key={achievement.id} className="achievement-card">
+                <div className="achievement-header">
+                  <h3>{achievement.title}</h3>
+                  <span className={`category-badge ${getCategoryClass(achievement.category)}`}>
+                    {achievement.category}
+                  </span>
+                </div>
+
+                <div className="achievement-meta">
+                  <span className="achievement-organization">{achievement.organization}</span>
+                  <span className="achievement-date">{achievement.date}</span>
+                </div>
+
+                <p className="achievement-description">{achievement.description}</p>
+
+                {achievement.technologies && achievement.technologies.length > 0 && (
+                  <div className="achievement-technologies">
+                    <h4>Tecnologías utilizadas:</h4>
+                    <div className="technologies-list">
+                      {achievement.technologies.map((tech, index) => (
+                        <span key={index} className="technology-tag">{tech}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>

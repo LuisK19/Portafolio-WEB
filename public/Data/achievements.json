@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "title": "Mejor Promedio de Admisión",
+    "organization": "Tecnológico de Costa Rica",
+    "date": "2021",
+    "description": "Reconocimiento por obtener el mejor promedio en el proceso de admisión para la carrera de Ingeniería en Computación.",
+    "category": "Académico"
+  },
+  {
+    "id": 2,
+    "title": "Participación en Hackathon Universitario",
+    "organization": "Universidad de Costa Rica",
+    "date": "2022",
+    "description": "Tercer lugar en competencia de desarrollo de soluciones tecnológicas para problemas ambientales.",
+    "category": "Competencia",
+    "technologies": ["Python", "IoT", "Data Analysis"]
+  },
+  {
+    "id": 3,
+    "title": "Certificación en Liderazgo",
+    "organization": "Mejores Costa Rica",
+    "date": "2022",
+    "description": "Programa intensivo de desarrollo de habilidades blandas y liderazgo para jóvenes talentosos.",
+    "category": "Desarrollo Personal"
+  }
+]
