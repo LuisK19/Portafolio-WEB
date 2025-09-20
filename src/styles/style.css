@@ -131,7 +131,7 @@ footer {
 }
 
 .menu-toggle {
-    display: block;
+    display: none;
     position: absolute;
     top: var(--spacing-sm);
     right: var(--spacing-sm);
