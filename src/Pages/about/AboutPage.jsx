@@ -231,7 +231,7 @@ const exportToPDF = async () => {
     
     yPosition = drawLine(yPosition);
 
-    // Recomendaciones
+    
     yPosition = addText('RECOMENDACIONES', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
     
     if (recommendations && recommendations.length > 0) {
@@ -244,17 +244,17 @@ const exportToPDF = async () => {
       yPosition = addText('No hay recomendaciones disponibles', margin, yPosition);
     }
 
-    // Pie de página
+    
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
       doc.setFontSize(10);
-      doc.setTextColor(100, 100, 100); // Color gris para el pie de página
+      doc.setTextColor(100, 100, 100); 
       doc.text(`Página ${i} de ${totalPages}`, pageWidth - margin, doc.internal.pageSize.getHeight() - 10, { align: 'right' });
       doc.text('CV generado desde mi portafolio personal', margin, doc.internal.pageSize.getHeight() - 10);
     }
 
-    // Guardar el PDF
+
     doc.save(`CV_${personalInfo.name.replace(/\s+/g, '_')}.pdf`);
     
   } catch (error) {

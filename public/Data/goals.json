@@ -14,14 +14,14 @@
   },
   {
     "id": 2,
-    "title": "Especialización en Inteligencia Artificial",
+    "title": "Especialización en .NET",
     "category": "Académico",
     "timeline": "Mediano Plazo (1-2 años)",
-    "description": "Profundizar en machine learning y data science aplicado a problemas reales.",
+    "description": "Profundizar conocimientos en .NET y C# para desarrollo de aplicaciones empresariales.",
     "actions": [
-      "Cursos especializados en Coursera/edX",
-      "Proyectos de análisis de datos",
-      "Participación en competencias de Kaggle"
+      "Certificación Microsoft en .NET",
+      "Desarrollar una aplicación empresarial",
+      "Contribuir a proyectos open source en .NET"
     ],
     "status": "Planificado"
   },

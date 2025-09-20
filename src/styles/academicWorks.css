@@ -1,4 +1,3 @@
-/* academicWorks.css - Versión final con animaciones y mejoras responsive */
 .works-page {
     min-height: 100vh;
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--color-white) 100%);
@@ -28,7 +27,6 @@
     opacity: 0.8;
 }
 
-/* Filtros globales - Versión compacta */
 .global-filters {
     background-color: var(--color-white);
     padding: var(--spacing-sm);
@@ -93,7 +91,6 @@
     margin-top: var(--spacing-xs);
 }
 
-/* Estilos para checkboxes animados */
 .cbx {
     -webkit-user-select: none;
     user-select: none;
@@ -107,7 +104,6 @@
     margin: 2px 0;
     justify-content: flex-start;
 }
-
 
 .cbx:hover {
     background-color: var(--light-green);
@@ -186,7 +182,6 @@
     }
 }
 
-/* Animación de fuegos artificiales (para el efecto especial) */
 @keyframes firework {
     0% {
         opacity: 1;
@@ -201,7 +196,6 @@
     }
 }
 
-/* Efecto especial  */
 .inp-cbx:checked + .cbx span:first-child::after {
     content: "";
     position: absolute;
@@ -331,7 +325,6 @@
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
 
-/* Grid de trabajos - Mejorado para responsive */
 .works-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
@@ -431,7 +424,6 @@
     font-size: 0.9rem;
 }
 
-/* Footer */
 .works-footer {
     text-align: center;
     padding: var(--spacing-md);
@@ -560,7 +552,6 @@
     }
 }
 
-/* Mejora visual para cuando no hay resultados */
 .works-container:empty::after {
     content: "No se encontraron trabajos con los filtros seleccionados";
     display: block;

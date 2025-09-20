@@ -140,10 +140,7 @@ footer {
     color: var(--text-color);
     font-size: 1.5rem;
     cursor: pointer;
-    margin-top: -15px;
 }
-
-
 
 /* Para pantallas muy grandes (más de 1600px) */
 @media (min-width: 1600px) {
@@ -445,13 +442,6 @@ footer {
     text-align: center;
 }
 
-
-
-
-
-
-
-/* Estados de carga y error */
 .loading,
 .error,
 .no-data {
@@ -468,7 +458,6 @@ footer {
     color: #666;
 }
 
-/* Mejoras para la página de trabajos académicos */
 .academic-works-page {
     min-height: 100vh;
     padding: 2rem 0;
@@ -554,20 +543,11 @@ margin-top: 1rem;
     background: var(--secondary-color);
 }
 
-
-
-
-
-
-/* Header en página principal cuando se hace scroll */
 .header.scrolled {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
 }
 
-
-
-/* Estilos para el botón de toggle */
 .toggle-works-btn {
     display: flex;
     align-items: center;
@@ -625,7 +605,7 @@ margin-top: 1rem;
     }
 
     #main-nav {
-        padding: var(--spacing-md) 0 var(--spacing-sm) 0; /* Más espacio en la parte superior */
+        padding: var(--spacing-md) 0 var(--spacing-sm) 0; 
     }
 
     #main-nav ul {
