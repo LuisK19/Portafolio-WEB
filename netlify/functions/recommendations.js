@@ -1,24 +1,40 @@
 import { neon } from '@netlify/neon';
 
-export default async (req, res) => {
-  const sql = neon(); // Usa NETLIFY_DATABASE_URL automáticamente
+export default async (event) => {
+  const sql = neon();
 
-  if (req.method === 'GET') {
+  if (event.httpMethod === 'GET') {
     const result = await sql`SELECT * FROM recommendations ORDER BY id DESC`;
-    return res.status(200).json(result);
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result),
+      headers: { 'Content-Type': 'application/json' }
+    };
   }
 
-  if (req.method === 'POST') {
-    const { name, position, text } = req.body;
+  if (event.httpMethod === 'POST') {
+    const { name, position, text } = JSON.parse(event.body);
     if (!name || !position || !text) {
-      return res.status(400).json({ error: 'Faltan campos' });
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Faltan campos' }),
+        headers: { 'Content-Type': 'application/json' }
+      };
     }
     await sql`
       INSERT INTO recommendations (name, position, text)
       VALUES (${name}, ${position}, ${text})
     `;
-    return res.status(201).json({ message: 'Recomendación guardada' });
+    return {
+      statusCode: 201,
+      body: JSON.stringify({ message: 'Recomendación guardada' }),
+      headers: { 'Content-Type': 'application/json' }
+    };
   }
 
-  return res.status(405).json({ error: 'Método no permitido' });
+  return {
+    statusCode: 405,
+    body: JSON.stringify({ error: 'Método no permitido' }),
+    headers: { 'Content-Type': 'application/json' }
+  };
 };
