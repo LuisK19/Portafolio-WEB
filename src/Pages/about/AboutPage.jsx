@@ -42,19 +42,20 @@ const AboutPage = () => {
     }));
   };
 
-  const handleRecommendationSubmit = (e) => {
+  const handleRecommendationSubmit = async (e) => {
     e.preventDefault();
-    const updatedRecommendations = [newRecommendation, ...recommendations];
-    setRecommendations(updatedRecommendations);
-    localStorage.setItem('recommendations', JSON.stringify(updatedRecommendations));
-    
-    setNewRecommendation({
-      name: '',
-      position: '',
-      text: ''
+    const res = await fetch('/.netlify/functions/recommendations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newRecommendation)
     });
-    
-    alert('¡Gracias por tu recomendación!');
+    if (res.ok) {
+      fetchRecommendations(); // Recarga la lista
+      setNewRecommendation({ name: '', position: '', text: '' });
+      alert('¡Gracias por tu recomendación!');
+    } else {
+      alert('Error al guardar la recomendación');
+    }
   };
 
 const exportToPDF = async () => {
@@ -94,15 +95,15 @@ const exportToPDF = async () => {
       const { fontSize = 12, fontStyle = 'normal', align = 'left', maxWidth = contentWidth, color = [0, 0, 0] } = styles;
       doc.setFontSize(fontSize);
       doc.setFont(undefined, fontStyle);
-      doc.setTextColor(...color); // Establecer color del texto
-      
+      doc.setTextColor(...color);
+
       const textLines = doc.splitTextToSize(text, maxWidth);
       if (y + textLines.length * (fontSize / 3) > doc.internal.pageSize.getHeight() - margin) {
         doc.addPage();
         y = margin;
       }
-      
-      doc.text(textLines, x, y);
+
+      doc.text(textLines, x, y, { align }); // <-- aquí se usa align
       return y + textLines.length * (fontSize / 3) + 5;
     };
 
@@ -262,6 +263,12 @@ const exportToPDF = async () => {
     alert('Error al generar el PDF. Por favor, intenta nuevamente.');
   }
 };
+
+  const fetchRecommendations = async () => {
+    const res = await fetch('/.netlify/functions/recommendations');
+    const data = await res.json();
+    setRecommendations(data);
+  };
 
   if (!personalInfo) {
     return <div className="loading">Cargando información...</div>;
