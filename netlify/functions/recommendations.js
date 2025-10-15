@@ -5,36 +5,32 @@ export default async (event) => {
 
   if (event.httpMethod === 'GET') {
     const result = await sql`SELECT * FROM recommendations ORDER BY id DESC`;
-    return {
-      statusCode: 200,
-      body: JSON.stringify(result),
+    return new Response(JSON.stringify(result), {
+      status: 200,
       headers: { 'Content-Type': 'application/json' }
-    };
+    });
   }
 
   if (event.httpMethod === 'POST') {
     const { name, position, text } = JSON.parse(event.body);
     if (!name || !position || !text) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Faltan campos' }),
+      return new Response(JSON.stringify({ error: 'Faltan campos' }), {
+        status: 400,
         headers: { 'Content-Type': 'application/json' }
-      };
+      });
     }
     await sql`
       INSERT INTO recommendations (name, position, text)
       VALUES (${name}, ${position}, ${text})
     `;
-    return {
-      statusCode: 201,
-      body: JSON.stringify({ message: 'Recomendación guardada' }),
+    return new Response(JSON.stringify({ message: 'Recomendación guardada' }), {
+      status: 201,
       headers: { 'Content-Type': 'application/json' }
-    };
+    });
   }
 
-  return {
-    statusCode: 405,
-    body: JSON.stringify({ error: 'Método no permitido' }),
+  return new Response(JSON.stringify({ error: 'Método no permitido' }), {
+    status: 405,
     headers: { 'Content-Type': 'application/json' }
-  };
+  });
 };
