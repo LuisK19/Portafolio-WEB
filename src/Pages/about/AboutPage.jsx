@@ -19,19 +19,27 @@ const AboutPage = () => {
       .then(data => setPersonalInfo(data))
       .catch(error => console.error('Error loading personal info:', error));
 
-    // Cargar recomendaciones existentes
-    const savedRecommendations = localStorage.getItem('recommendations');
-    if (savedRecommendations) {
-      setRecommendations(JSON.parse(savedRecommendations));
-    } else {
-      fetch('/Data/recommendations.json')
-        .then(response => response.json())
-        .then(data => {
-          setRecommendations(data);
-          localStorage.setItem('recommendations', JSON.stringify(data));
-        })
-        .catch(error => console.error('Error loading recommendations:', error));
-    }
+    // Cargar recomendaciones desde issues públicos de GitHub
+    fetch('https://api.github.com/repos/LuisK19/Portafolio-WEB/issues?state=open&labels=recomendacion')
+      .then(response => response.json())
+      .then(data => {
+        // Mapear issues a recomendaciones
+        const mapped = data.map(issue => {
+          // Extraer nombre, puesto y texto del body del issue
+          // Espera formato: **Nombre:** ...\n**Puesto:** ...\n**Recomendación:**\n...
+          const body = issue.body || '';
+          const nameMatch = body.match(/\*\*Nombre:\*\* (.*)/);
+          const positionMatch = body.match(/\*\*Puesto:\*\* (.*)/);
+          const textMatch = body.match(/\*\*Recomendación:\*\*[\r\n]+([\s\S]*)/);
+          return {
+            name: nameMatch ? nameMatch[1].trim() : 'Anónimo',
+            position: positionMatch ? positionMatch[1].trim() : '',
+            text: textMatch ? textMatch[1].trim() : body.trim()
+          };
+        });
+        setRecommendations(mapped);
+      })
+      .catch(error => console.error('Error loading GitHub recommendations:', error));
   }, []);
 
   const handleRecommendationChange = (e) => {
@@ -44,17 +52,17 @@ const AboutPage = () => {
 
   const handleRecommendationSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('/.netlify/functions/recommendations', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newRecommendation)
-    });
-    if (res.ok) {
-      fetchRecommendations(); // Recarga la lista
+    try {
+      const res = await fetch('/.netlify/functions/create-recommendations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newRecommendation)
+      });
+      if (!res.ok) throw new Error('Error al guardar la recomendación');
       setNewRecommendation({ name: '', position: '', text: '' });
-      alert('¡Gracias por tu recomendación!');
-    } else {
-      alert('Error al guardar la recomendación');
+      alert('¡Gracias por tu recomendación! Será visible tras ser aprobada en GitHub.');
+    } catch (error) {
+      alert('Error al guardar la recomendación: ' + error.message);
     }
   };
 
@@ -264,11 +272,6 @@ const exportToPDF = async () => {
   }
 };
 
-  const fetchRecommendations = async () => {
-    const res = await fetch('/.netlify/functions/recommendations');
-    const data = await res.json();
-    setRecommendations(data);
-  };
 
   if (!personalInfo) {
     return <div className="loading">Cargando información...</div>;
