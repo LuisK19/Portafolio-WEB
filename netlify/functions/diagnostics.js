@@ -3,8 +3,8 @@ export default async (event) => {
     return new Response(JSON.stringify({
       status: "ok",
       time: new Date().toISOString(),
-      node: typeof process !== 'undefined' ? process.version : 'unknown',
-      env: typeof process !== 'undefined' ? process.env.NODE_ENV : 'unknown'
+  node: 'unsupported',
+  env: 'unsupported'
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
