@@ -3,41 +3,38 @@ import { Octokit } from "octokit";
 export default async (event) => {
     // Manejar CORS
     if (event.httpMethod === 'OPTIONS') {
-        return {
-            statusCode: 204,
+        return new Response(null, {
+            status: 204,
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type'
-            },
-            body: ''
-        };
+            }
+        });
     }
 
     // Solo permitir POST
     if (event.httpMethod !== 'POST') {
-        return {
-            statusCode: 405,
+        return new Response(JSON.stringify({ error: 'Método no permitido' }), {
+            status: 405,
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify({ error: 'Método no permitido' })
-        };
+            }
+        });
     }
 
     try {
         const { name, position, text } = JSON.parse(event.body);
 
         if (!name || !position || !text) {
-            return {
-                statusCode: 400,
+            return new Response(JSON.stringify({ error: 'Faltan campos requeridos' }), {
+                status: 400,
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify({ error: 'Faltan campos requeridos' })
-            };
+                }
+            });
         }
 
         // Inicializar Octokit con el token
@@ -58,7 +55,7 @@ export default async (event) => {
                 repo,
                 path,
             });
-            // Decodificar base64 - CORREGIDO
+            // Decodificar base64
             const content = Buffer.from(data.content, 'base64').toString('utf8');
             currentContent = JSON.parse(content);
             fileSha = data.sha;
@@ -78,7 +75,7 @@ export default async (event) => {
 
         currentContent.push(newRecommendation);
 
-        // Codificar a base64 - CORREGIDO
+        // Codificar a base64
         const contentBase64 = Buffer.from(JSON.stringify(currentContent, null, 2)).toString('base64');
 
         // Preparar parámetros para actualizar
@@ -97,32 +94,28 @@ export default async (event) => {
 
         const { data } = await octokit.rest.repos.createOrUpdateFileContents(updateParams);
 
-        // RESPUESTA CORREGIDA - usar formato objeto, no new Response()
-        return {
-            statusCode: 200,
+        return new Response(JSON.stringify({
+            success: true,
+            message: 'Recomendación agregada exitosamente',
+            commit: data.commit.html_url
+        }), {
+            status: 200,
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify({
-                success: true,
-                message: 'Recomendación agregada exitosamente',
-                commit: data.commit.html_url
-            })
-        };
+            }
+        });
 
     } catch (error) {
         console.error('Error en update-recommendations:', error);
-        // RESPUESTA CORREGIDA - usar formato objeto
-        return {
-            statusCode: 500,
+        return new Response(JSON.stringify({
+            error: 'Error interno del servidor: ' + error.message
+        }), {
+            status: 500,
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify({
-                error: 'Error interno del servidor: ' + error.message
-            })
-        };
+            }
+        });
     }
 };
