@@ -15,10 +15,8 @@ export default async (event) => {
 
     // Only allow GET method
     console.log('Received request method1:', event.httpMethod);
-    alert('Received request method1: ' + event.httpMethod);
     if (event.httpMethod !== 'GET') {
         console.log('Received request method2:', event.httpMethod);
-        alert('Received request method2: ' + event.httpMethod);
         return new Response(JSON.stringify({ error: 'Método no permitido. Use GET.' }), {
             status: 405,
             headers: {
