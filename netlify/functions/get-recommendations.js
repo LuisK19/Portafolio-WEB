@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 
 export default async (event) => {
-  // Manejar CORS
+  // Handle CORS preflight requests
   if (event.httpMethod === 'OPTIONS') {
     return new Response(null, {
       status: 204,
@@ -13,7 +13,7 @@ export default async (event) => {
     });
   }
 
-  // Solo permitir GET
+  // Only allow GET method
   if (event.httpMethod !== 'GET') {
     return new Response(JSON.stringify({ error: 'Método no permitido. Use GET.' }), {
       status: 405,
@@ -24,6 +24,7 @@ export default async (event) => {
     });
   }
 
+  // Main logic for GET request
   try {
     const octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN
@@ -39,10 +40,11 @@ export default async (event) => {
       path,
     });
 
-    // Decodificar base64
+    // Decode base64 content
     const content = Buffer.from(data.content, 'base64').toString('utf8');
     const recommendations = JSON.parse(content);
 
+    // Return the recommendations
     return new Response(JSON.stringify({
       success: true,
       count: recommendations.length,
@@ -56,10 +58,9 @@ export default async (event) => {
     });
 
   } catch (error) {
-    console.error('Error leyendo recomendaciones:', error);
+    console.error('Error reading recommendations:', error);
     return new Response(JSON.stringify({
-      error: 'Error leyendo recomendaciones: ' + error.message,
-      suggestions: 'Verifica que el archivo recommendations.json existe en tu repositorio'
+      error: 'Error leyendo recomendaciones: ' + error.message
     }), {
       status: 500,
       headers: {

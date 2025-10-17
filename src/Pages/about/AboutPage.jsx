@@ -14,13 +14,13 @@ const AboutPage = () => {
   });
 
   useEffect(() => {
-    // Cargar información personal
+    // Load personal info
     fetch('/Data/personalInfo.json')
       .then(response => response.json())
       .then(data => setPersonalInfo(data))
       .catch(error => console.error('Error loading personal info:', error));
 
-    // Cargar recomendaciones desde la función GET
+    // Load recommendations from the NEW function
     fetch('/.netlify/functions/get-recommendations')
       .then(response => response.json())
       .then(data => {

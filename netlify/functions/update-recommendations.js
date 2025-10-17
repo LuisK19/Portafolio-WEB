@@ -7,60 +7,12 @@ export default async (event) => {
             status: 204,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type'
             }
         });
     }
 
-    // Manejar GET - Para leer las recomendaciones existentes
-    if (event.httpMethod === 'GET') {
-        try {
-            console.log('GET request - Reading recommendations...');
-            
-            const octokit = new Octokit({
-                auth: process.env.GITHUB_TOKEN
-            });
-
-            const owner = "LuisK19";
-            const repo = "Portafolio-WEB";
-            const path = "public/Data/recommendations.json";
-
-            const { data } = await octokit.rest.repos.getContent({
-                owner,
-                repo,
-                path,
-            });
-
-            // Decodificar base64
-            const content = Buffer.from(data.content, 'base64').toString('utf8');
-            const recommendations = JSON.parse(content);
-
-            return new Response(JSON.stringify({
-                success: true,
-                count: recommendations.length,
-                recommendations: recommendations
-            }), {
-                status: 200,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-
-        } catch (error) {
-            console.error('Error reading recommendations:', error);
-            return new Response(JSON.stringify({
-                error: 'Error leyendo recomendaciones: ' + error.message
-            }), {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }
-    }
 
     // Manejar POST - Para agregar nuevas recomendaciones
     if (event.httpMethod === 'POST') {
