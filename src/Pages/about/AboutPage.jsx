@@ -20,10 +20,16 @@ const AboutPage = () => {
       .then(data => setPersonalInfo(data))
       .catch(error => console.error('Error loading personal info:', error));
 
-    // Cargar recomendaciones desde tu archivo local
-    fetch('/Data/recommendations.json')
+    // Cargar recomendaciones desde la función GET
+    fetch('/.netlify/functions/get-recommendations')
       .then(response => response.json())
-      .then(data => setRecommendations(data))
+      .then(data => {
+        if (data.success) {
+          setRecommendations(data.recommendations);
+        } else {
+          console.error('Error loading recommendations:', data.error);
+        }
+      })
       .catch(error => console.error('Error loading recommendations:', error));
   }, []);
 
@@ -44,21 +50,26 @@ const AboutPage = () => {
         body: JSON.stringify(newRecommendation)
       });
 
-      const result = await res.json();
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || `HTTP ${res.status}: ${res.statusText}`);
+      }
 
-      if (!res.ok) throw new Error(result.error || 'Error al guardar la recomendación');
+      const result = await res.json();
 
       // Limpiar formulario
       setNewRecommendation({ name: '', position: '', text: '' });
 
-      // Recargar las recomendaciones para mostrar la nueva
-      const recommendationsResponse = await fetch('/Data/recommendations.json');
-      const updatedRecommendations = await recommendationsResponse.json();
-      setRecommendations(updatedRecommendations);
+      // Recargar las recomendaciones
+      const recommendationsResponse = await fetch('/.netlify/functions/get-recommendations');
+      const recommendationsData = await recommendationsResponse.json();
+      if (recommendationsData.success) {
+        setRecommendations(recommendationsData.recommendations);
+      }
 
       alert('¡Gracias por tu recomendación! Ha sido agregada exitosamente.');
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error completo:', error);
       alert('Error al guardar la recomendación: ' + error.message);
     }
   };
