@@ -14,32 +14,17 @@ const AboutPage = () => {
   });
 
   useEffect(() => {
+    // Cargar información personal
     fetch('/Data/personalInfo.json')
       .then(response => response.json())
       .then(data => setPersonalInfo(data))
       .catch(error => console.error('Error loading personal info:', error));
 
-    // Cargar recomendaciones desde issues públicos de GitHub
-    fetch('https://api.github.com/repos/LuisK19/Portafolio-WEB/issues?state=open&labels=recomendacion')
+    // Cargar recomendaciones desde tu archivo local
+    fetch('/Data/recommendations.json')
       .then(response => response.json())
-      .then(data => {
-        // Mapear issues a recomendaciones
-        const mapped = data.map(issue => {
-          // Extraer nombre, puesto y texto del body del issue
-          // Espera formato: **Nombre:** ...\n**Puesto:** ...\n**Recomendación:**\n...
-          const body = issue.body || '';
-          const nameMatch = body.match(/\*\*Nombre:\*\* (.*)/);
-          const positionMatch = body.match(/\*\*Puesto:\*\* (.*)/);
-          const textMatch = body.match(/\*\*Recomendación:\*\*[\r\n]+([\s\S]*)/);
-          return {
-            name: nameMatch ? nameMatch[1].trim() : 'Anónimo',
-            position: positionMatch ? positionMatch[1].trim() : '',
-            text: textMatch ? textMatch[1].trim() : body.trim()
-          };
-        });
-        setRecommendations(mapped);
-      })
-      .catch(error => console.error('Error loading GitHub recommendations:', error));
+      .then(data => setRecommendations(data))
+      .catch(error => console.error('Error loading recommendations:', error));
   }, []);
 
   const handleRecommendationChange = (e) => {
@@ -53,224 +38,236 @@ const AboutPage = () => {
   const handleRecommendationSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/.netlify/functions/create-recommendations', {
+      const res = await fetch('/.netlify/functions/update-recommendations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newRecommendation)
       });
-      if (!res.ok) throw new Error('Error al guardar la recomendación');
+
+      const result = await res.json();
+
+      if (!res.ok) throw new Error(result.error || 'Error al guardar la recomendación');
+
+      // Limpiar formulario
       setNewRecommendation({ name: '', position: '', text: '' });
-      alert('¡Gracias por tu recomendación! Será visible tras ser aprobada en GitHub.');
+
+      // Recargar las recomendaciones para mostrar la nueva
+      const recommendationsResponse = await fetch('/Data/recommendations.json');
+      const updatedRecommendations = await recommendationsResponse.json();
+      setRecommendations(updatedRecommendations);
+
+      alert('¡Gracias por tu recomendación! Ha sido agregada exitosamente.');
     } catch (error) {
+      console.error('Error:', error);
       alert('Error al guardar la recomendación: ' + error.message);
     }
   };
 
-const exportToPDF = async () => {
-  try {
-    // Importación dinámica de jsPDF
-    const { jsPDF } = await import('jspdf');
-    
-    // Cargar datos adicionales necesarios
-    let academicData = { courses: [] };
-    let hobbiesData = [];
-    
+  const exportToPDF = async () => {
     try {
-      const academicResponse = await fetch('/Data/academicWorks.json');
-      academicData = await academicResponse.json();
-    } catch (error) {
-      console.error('Error loading academic works:', error);
-    }
-    
-    try {
-      const hobbiesResponse = await fetch('/Data/hobbies.json');
-      hobbiesData = await hobbiesResponse.json();
-    } catch (error) {
-      console.error('Error loading hobbies:', error);
-    }
+      // Importación dinámica de jsPDF
+      const { jsPDF } = await import('jspdf');
 
-    // Crear el documento PDF
-    const doc = new jsPDF();
-    
-    // Configuración inicial
-    let yPosition = 20;
-    const margin = 20;
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const contentWidth = pageWidth - 2 * margin;
-    
-    // Función para agregar texto con manejo de saltos de página
-    const addText = (text, x, y, styles = {}) => {
-      const { fontSize = 12, fontStyle = 'normal', align = 'left', maxWidth = contentWidth, color = [0, 0, 0] } = styles;
-      doc.setFontSize(fontSize);
-      doc.setFont(undefined, fontStyle);
-      doc.setTextColor(...color);
+      // Cargar datos adicionales necesarios
+      let academicData = { courses: [] };
+      let hobbiesData = [];
 
-      const textLines = doc.splitTextToSize(text, maxWidth);
-      if (y + textLines.length * (fontSize / 3) > doc.internal.pageSize.getHeight() - margin) {
-        doc.addPage();
-        y = margin;
+      try {
+        const academicResponse = await fetch('/Data/academicWorks.json');
+        academicData = await academicResponse.json();
+      } catch (error) {
+        console.error('Error loading academic works:', error);
       }
 
-      doc.text(textLines, x, y, { align }); // <-- aquí se usa align
-      return y + textLines.length * (fontSize / 3) + 5;
-    };
+      try {
+        const hobbiesResponse = await fetch('/Data/hobbies.json');
+        hobbiesData = await hobbiesResponse.json();
+      } catch (error) {
+        console.error('Error loading hobbies:', error);
+      }
 
-    // Función para dibujar una línea separadora
-    const drawLine = (y) => {
-      doc.setLineWidth(0.5);
-      doc.line(margin, y, pageWidth - margin, y);
-      return y + 10;
-    };
+      // Crear el documento PDF
+      const doc = new jsPDF();
 
-    // Encabezado del CV
-    doc.setFillColor(0, 103, 79); // Color primario de tu tema
-    doc.rect(0, 0, pageWidth, 50, 'F');
-    
-    doc.setFontSize(24);
-    doc.setTextColor(255, 255, 255); // Texto blanco
-    doc.text(personalInfo.name, margin, 25);
-    
-    doc.setFontSize(14);
-    doc.text(personalInfo.title, margin, 35);
-    
-    // RESTABLECER COLOR DEL TEXTO A NEGRO para el contenido
-    doc.setTextColor(0, 0, 0);
-    
-    yPosition = 60;
+      // Configuración inicial
+      let yPosition = 20;
+      const margin = 20;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const contentWidth = pageWidth - 2 * margin;
 
-    // Información de contacto
-    yPosition = addText('INFORMACIÓN DE CONTACTO', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
-    yPosition = addText(`Email: ${personalInfo.email}`, margin, yPosition);
-    yPosition = addText(`Teléfono: ${personalInfo.phone}`, margin, yPosition);
-    yPosition = addText(`Ubicación: ${personalInfo.location}`, margin, yPosition);
-    
-    // Enlaces sociales
-    const socialLinksText = personalInfo.socialLinks.map(link => `${link.name}: ${link.url}`).join(' | ');
-    yPosition = addText(socialLinksText, margin, yPosition, { fontSize: 10 });
-    
-    yPosition = drawLine(yPosition);
+      // Función para agregar texto con manejo de saltos de página
+      const addText = (text, x, y, styles = {}) => {
+        const { fontSize = 12, fontStyle = 'normal', align = 'left', maxWidth = contentWidth, color = [0, 0, 0] } = styles;
+        doc.setFontSize(fontSize);
+        doc.setFont(undefined, fontStyle);
+        doc.setTextColor(...color);
 
-    // Biografía
-    yPosition = addText('PERFIL PROFESIONAL', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
-    yPosition = addText(personalInfo.bio, margin, yPosition);
-    
-    yPosition = drawLine(yPosition);
-
-    // Habilidades técnicas
-    yPosition = addText('HABILIDADES TÉCNICAS', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
-    
-    personalInfo.skills.forEach(category => {
-      yPosition = addText(category.category.toUpperCase(), margin, yPosition, { fontSize: 14, fontStyle: 'bold' });
-      
-      category.items.forEach(skill => {
-        const skillText = `${skill.name}: ${skill.level}%`;
-        yPosition = addText(skillText, margin + 5, yPosition);
-      });
-      
-      yPosition += 5;
-    });
-    
-    yPosition = drawLine(yPosition);
-
-    // Experiencia académica (trabajos por curso)
-    yPosition = addText('EXPERIENCIA ACADÉMICA', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
-    
-    if (academicData.courses && academicData.courses.length > 0) {
-      academicData.courses.forEach(course => {
-        yPosition = addText(`${course.code} - ${course.name}`, margin, yPosition, { fontSize: 14, fontStyle: 'bold' });
-        yPosition = addText(`Semestre: ${course.semester}`, margin, yPosition, { fontSize: 12 });
-        yPosition = addText(course.description, margin, yPosition, { fontSize: 10 });
-        
-        if (course.works && course.works.length > 0) {
-          yPosition = addText('Trabajos:', margin, yPosition, { fontSize: 12, fontStyle: 'bold' });
-          
-          course.works.forEach(work => {
-            yPosition = addText(`• ${work.name} (${work.type})`, margin + 5, yPosition);
-            yPosition = addText(`  Fecha: ${work.date}`, margin + 5, yPosition, { fontSize: 10 });
-            yPosition = addText(`  Tecnologías: ${work.technologies.join(', ')}`, margin + 5, yPosition, { fontSize: 10 });
-            
-            if (work.description) {
-              yPosition = addText(`  Descripción: ${work.description}`, margin + 5, yPosition, { fontSize: 10 });
-            }
-            
-            yPosition += 3;
-          });
+        const textLines = doc.splitTextToSize(text, maxWidth);
+        if (y + textLines.length * (fontSize / 3) > doc.internal.pageSize.getHeight() - margin) {
+          doc.addPage();
+          y = margin;
         }
-        
+
+        doc.text(textLines, x, y, { align }); // <-- aquí se usa align
+        return y + textLines.length * (fontSize / 3) + 5;
+      };
+
+      // Función para dibujar una línea separadora
+      const drawLine = (y) => {
+        doc.setLineWidth(0.5);
+        doc.line(margin, y, pageWidth - margin, y);
+        return y + 10;
+      };
+
+      // Encabezado del CV
+      doc.setFillColor(0, 103, 79); // Color primario de tu tema
+      doc.rect(0, 0, pageWidth, 50, 'F');
+
+      doc.setFontSize(24);
+      doc.setTextColor(255, 255, 255); // Texto blanco
+      doc.text(personalInfo.name, margin, 25);
+
+      doc.setFontSize(14);
+      doc.text(personalInfo.title, margin, 35);
+
+      // RESTABLECER COLOR DEL TEXTO A NEGRO para el contenido
+      doc.setTextColor(0, 0, 0);
+
+      yPosition = 60;
+
+      // Información de contacto
+      yPosition = addText('INFORMACIÓN DE CONTACTO', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
+      yPosition = addText(`Email: ${personalInfo.email}`, margin, yPosition);
+      yPosition = addText(`Teléfono: ${personalInfo.phone}`, margin, yPosition);
+      yPosition = addText(`Ubicación: ${personalInfo.location}`, margin, yPosition);
+
+      // Enlaces sociales
+      const socialLinksText = personalInfo.socialLinks.map(link => `${link.name}: ${link.url}`).join(' | ');
+      yPosition = addText(socialLinksText, margin, yPosition, { fontSize: 10 });
+
+      yPosition = drawLine(yPosition);
+
+      // Biografía
+      yPosition = addText('PERFIL PROFESIONAL', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
+      yPosition = addText(personalInfo.bio, margin, yPosition);
+
+      yPosition = drawLine(yPosition);
+
+      // Habilidades técnicas
+      yPosition = addText('HABILIDADES TÉCNICAS', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
+
+      personalInfo.skills.forEach(category => {
+        yPosition = addText(category.category.toUpperCase(), margin, yPosition, { fontSize: 14, fontStyle: 'bold' });
+
+        category.items.forEach(skill => {
+          const skillText = `${skill.name}: ${skill.level}%`;
+          yPosition = addText(skillText, margin + 5, yPosition);
+        });
+
         yPosition += 5;
       });
-    } else {
-      yPosition = addText('No hay información académica disponible', margin, yPosition);
+
+      yPosition = drawLine(yPosition);
+
+      // Experiencia académica (trabajos por curso)
+      yPosition = addText('EXPERIENCIA ACADÉMICA', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
+
+      if (academicData.courses && academicData.courses.length > 0) {
+        academicData.courses.forEach(course => {
+          yPosition = addText(`${course.code} - ${course.name}`, margin, yPosition, { fontSize: 14, fontStyle: 'bold' });
+          yPosition = addText(`Semestre: ${course.semester}`, margin, yPosition, { fontSize: 12 });
+          yPosition = addText(course.description, margin, yPosition, { fontSize: 10 });
+
+          if (course.works && course.works.length > 0) {
+            yPosition = addText('Trabajos:', margin, yPosition, { fontSize: 12, fontStyle: 'bold' });
+
+            course.works.forEach(work => {
+              yPosition = addText(`• ${work.name} (${work.type})`, margin + 5, yPosition);
+              yPosition = addText(`  Fecha: ${work.date}`, margin + 5, yPosition, { fontSize: 10 });
+              yPosition = addText(`  Tecnologías: ${work.technologies.join(', ')}`, margin + 5, yPosition, { fontSize: 10 });
+
+              if (work.description) {
+                yPosition = addText(`  Descripción: ${work.description}`, margin + 5, yPosition, { fontSize: 10 });
+              }
+
+              yPosition += 3;
+            });
+          }
+
+          yPosition += 5;
+        });
+      } else {
+        yPosition = addText('No hay información académica disponible', margin, yPosition);
+      }
+
+      yPosition = drawLine(yPosition);
+
+      // Certificaciones
+      yPosition = addText('CERTIFICACIONES', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
+
+      if (personalInfo.certifications && personalInfo.certifications.length > 0) {
+        personalInfo.certifications.forEach(cert => {
+          yPosition = addText(cert.title, margin, yPosition, { fontSize: 14, fontStyle: 'bold' });
+          yPosition = addText(`${cert.organization} - ${cert.date}`, margin, yPosition);
+
+          if (cert.certId) {
+            yPosition = addText(`ID: ${cert.certId}`, margin, yPosition, { fontSize: 10 });
+          }
+
+          yPosition += 5;
+        });
+      } else {
+        yPosition = addText('No hay certificaciones disponibles', margin, yPosition);
+      }
+
+      yPosition = drawLine(yPosition);
+
+      // Hobbies e intereses
+      yPosition = addText('HOBBIES E INTERESES', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
+
+      if (hobbiesData && hobbiesData.length > 0) {
+        hobbiesData.forEach(hobby => {
+          yPosition = addText(`${hobby.icon} ${hobby.title}`, margin, yPosition, { fontSize: 14 });
+          yPosition = addText(hobby.description, margin, yPosition, { fontSize: 10 });
+          yPosition += 5;
+        });
+      } else {
+        yPosition = addText('No hay hobbies disponibles', margin, yPosition);
+      }
+
+      yPosition = drawLine(yPosition);
+
+
+      yPosition = addText('RECOMENDACIONES', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
+
+      if (recommendations && recommendations.length > 0) {
+        recommendations.forEach(rec => {
+          yPosition = addText(`"${rec.text}"`, margin, yPosition, { fontStyle: 'italic' });
+          yPosition = addText(`- ${rec.name}, ${rec.position}`, margin, yPosition, { align: 'right', fontSize: 10 });
+          yPosition += 10;
+        });
+      } else {
+        yPosition = addText('No hay recomendaciones disponibles', margin, yPosition);
+      }
+
+
+      const totalPages = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        doc.setPage(i);
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Página ${i} de ${totalPages}`, pageWidth - margin, doc.internal.pageSize.getHeight() - 10, { align: 'right' });
+        doc.text('CV generado desde mi portafolio personal', margin, doc.internal.pageSize.getHeight() - 10);
+      }
+
+
+      doc.save(`CV_${personalInfo.name.replace(/\s+/g, '_')}.pdf`);
+
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Error al generar el PDF. Por favor, intenta nuevamente.');
     }
-    
-    yPosition = drawLine(yPosition);
-
-    // Certificaciones
-    yPosition = addText('CERTIFICACIONES', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
-    
-    if (personalInfo.certifications && personalInfo.certifications.length > 0) {
-      personalInfo.certifications.forEach(cert => {
-        yPosition = addText(cert.title, margin, yPosition, { fontSize: 14, fontStyle: 'bold' });
-        yPosition = addText(`${cert.organization} - ${cert.date}`, margin, yPosition);
-        
-        if (cert.certId) {
-          yPosition = addText(`ID: ${cert.certId}`, margin, yPosition, { fontSize: 10 });
-        }
-        
-        yPosition += 5;
-      });
-    } else {
-      yPosition = addText('No hay certificaciones disponibles', margin, yPosition);
-    }
-    
-    yPosition = drawLine(yPosition);
-
-    // Hobbies e intereses
-    yPosition = addText('HOBBIES E INTERESES', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
-    
-    if (hobbiesData && hobbiesData.length > 0) {
-      hobbiesData.forEach(hobby => {
-        yPosition = addText(`${hobby.icon} ${hobby.title}`, margin, yPosition, { fontSize: 14 });
-        yPosition = addText(hobby.description, margin, yPosition, { fontSize: 10 });
-        yPosition += 5;
-      });
-    } else {
-      yPosition = addText('No hay hobbies disponibles', margin, yPosition);
-    }
-    
-    yPosition = drawLine(yPosition);
-
-    
-    yPosition = addText('RECOMENDACIONES', margin, yPosition, { fontSize: 16, fontStyle: 'bold' });
-    
-    if (recommendations && recommendations.length > 0) {
-      recommendations.forEach(rec => {
-        yPosition = addText(`"${rec.text}"`, margin, yPosition, { fontStyle: 'italic' });
-        yPosition = addText(`- ${rec.name}, ${rec.position}`, margin, yPosition, { align: 'right', fontSize: 10 });
-        yPosition += 10;
-      });
-    } else {
-      yPosition = addText('No hay recomendaciones disponibles', margin, yPosition);
-    }
-
-    
-    const totalPages = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
-      doc.setPage(i);
-      doc.setFontSize(10);
-      doc.setTextColor(100, 100, 100); 
-      doc.text(`Página ${i} de ${totalPages}`, pageWidth - margin, doc.internal.pageSize.getHeight() - 10, { align: 'right' });
-      doc.text('CV generado desde mi portafolio personal', margin, doc.internal.pageSize.getHeight() - 10);
-    }
-
-
-    doc.save(`CV_${personalInfo.name.replace(/\s+/g, '_')}.pdf`);
-    
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    alert('Error al generar el PDF. Por favor, intenta nuevamente.');
-  }
-};
+  };
 
 
   if (!personalInfo) {
@@ -317,8 +314,8 @@ const exportToPDF = async () => {
                         <span className="skill-percentage">{skill.level}%</span>
                       </div>
                       <div className="skill-bar">
-                        <div 
-                          className="skill-progress" 
+                        <div
+                          className="skill-progress"
                           style={{ width: `${skill.level}%` }}
                         ></div>
                       </div>
@@ -337,7 +334,7 @@ const exportToPDF = async () => {
 
         <section className="recommendations-section">
           <h2>Recomendaciones</h2>
-          
+
           <div className="add-recommendation">
             <h3>Agregar una recomendación</h3>
             <form onSubmit={handleRecommendationSubmit}>
