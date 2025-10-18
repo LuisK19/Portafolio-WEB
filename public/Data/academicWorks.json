@@ -11,63 +11,159 @@
           "type": "laboratorio",
           "description": "Investigación y documentación de herramientas modernas utilizadas en el desarrollo web profesional.",
           "date": "2023-03-15",
-          "technologies": ["HTML", "Markdown", "Netlify"],
-          "repoLink": "#",
-          "demoLink": "#"
+          "technologies": [
+            "HTML",
+            "Markdown",
+            "Netlify"
+          ],
+          "repoLink": "https://github.com/LuisK19/LAB-1-WEB",
+          "demoLink": "https://cute-salmiakki-2d40b5.netlify.app/"
         },
         {
           "name": "Laboratorio 2 - Estructura Semántica y Accesibilidad",
           "type": "laboratorio",
           "description": "Creación de sitio web con estructura semántica HTML5 y prácticas de accesibilidad.",
-          "date": "2023-04-01",
-          "technologies": ["HTML5", "CSS", "Accesibilidad", "WAI-ARIA"],
-          "repoLink": "#",
-          "demoLink": "#"
+          "date": "2025-04-01",
+          "technologies": [
+            "HTML5",
+            "CSS",
+            "Accesibilidad",
+            "WAI-ARIA"
+          ],
+          "repoLink": "https://github.com/LuisK19/LAB-2-WEB",
+          "demoLink": "https://lab2html.netlify.app/"
         },
         {
           "name": "Laboratorio 3 - Selectores, Box Model y Positioning",
           "type": "laboratorio",
           "description": "Aplicación de técnicas avanzadas de CSS3 con selectores, modelo de caja y posicionamiento.",
-          "date": "2023-04-20",
-          "technologies": ["CSS3", "Flexbox", "Grid", "Positioning"],
-          "repoLink": "#",
-          "demoLink": "#"
+          "date": "2025-04-20",
+          "technologies": [
+            "CSS3",
+            "Flexbox",
+            "Grid",
+            "Positioning"
+          ],
+          "repoLink": "https://github.com/LuisK19/LAB-2-WEB/tree/lab3-selectores-boxmodel",
+          "demoLink": "https://lab3html.netlify.app/"
         },
         {
           "name": "Laboratorio 4 - Accesibilidad Web",
           "type": "laboratorio",
           "description": "Análisis de problemas de accesibilidad y priorización de soluciones basadas en principios POUR.",
-          "date": "2023-05-05",
-          "technologies": ["Accesibilidad", "WCAG", "POUR"],
+          "date": "2025-05-05",
+          "technologies": [
+            "Accesibilidad",
+            "WCAG",
+            "POUR"
+          ],
           "repoLink": "#",
-          "demoLink": "#"
+          "demoLink": "#",
+          "notes": "Documento de texto - No hay repositorio de código"
         },
         {
           "name": "Laboratorio 5 - Diseño Responsive",
           "type": "laboratorio",
           "description": "Conversión del sitio a diseño responsive con tres breakpoints (móvil, tablet, desktop).",
-          "date": "2023-05-20",
-          "technologies": ["Responsive Design", "Media Queries", "CSS Grid", "Flexbox"],
+          "date": "2025-05-20",
+          "technologies": [
+            "Responsive Design",
+            "Media Queries",
+            "CSS Grid",
+            "Flexbox"
+          ],
+          "repoLink": "https://github.com/LuisK19/LAB-2-WEB/tree/lab5-responsive",
+          "demoLink": "https://labhtml.netlify.app/"
+        },
+        {
+          "name": "Laboratorio 6 - Manipulación del DOM y Eventos",
+          "type": "laboratorio",
+          "description": "Ejercicios prácticos sobre manipulación del DOM y eventos en JavaScript. Incluye: 1) Selección de elementos, 2) Manipulación de contenido y atributos, 3) Creación y eliminación de nodos, 4) Manejo de eventos.",
+          "date": "2025-05-30",
+          "technologies": [
+            "JavaScript",
+            "DOM",
+            "Eventos",
+            "HTML",
+            "CSS"
+          ],
           "repoLink": "#",
-          "demoLink": "#"
+          "demoLink": "#",
+          "notes": "Se entrego en una carpeta comprimida en el tecdigital - No hay repositorio público"
+        },
+        {
+          "name": "Laboratorio 7 - APIs REST: JSON y XML",
+          "type": "presentación",
+          "description": "Presentación sobre formatos de datos en APIs REST: JSON y XML.",
+          "date": "2025-06-15",
+          "technologies": [
+            "APIs REST",
+            "JSON",
+            "XML",
+            "Presentación"
+          ],
+          "repoLink": "#",
+          "demoLink": "#",
+          "notes": "Presentación grupal - No hay repositorio de código"
+        },
+        {
+          "name": "Laboratorio 8 - API REST con Node.js y Express",
+          "type": "laboratorio",
+          "description": "Desarrollo de API REST con Node.js y Express con seguridad JWT, validaciones y documentación Postman.",
+          "date": "2025-09-25",
+          "technologies": [
+            "Node.js",
+            "Express",
+            "REST API",
+            "JWT",
+            "Postman"
+          ],
+          "repoLink": "https://github.com/LuisK19/LAB-8-WEB",
+          "demoLink": "https://documenter.getpostman.com/view/48954743/2sB3QGuBuH"
+        },
+        {
+          "name": "Laboratorio 9 - GraphQL con Node.js",
+          "type": "laboratorio",
+          "description": "Transformación de endpoints REST a GraphQL con esquemas, consultas, mutaciones y autenticación JWT.",
+          "date": "2025-10-10",
+          "technologies": [
+            "Node.js",
+            "GraphQL",
+            "JWT",
+            "Resolvers",
+            "Schema"
+          ],
+          "repoLink": "https://github.com/LuisK19/LAB-9-WEB",
+          "demoLink": "https://documenter.getpostman.com/view/48954743/2sB3QMKokJ"
         },
         {
           "name": "Proyecto 1 - Plataforma Bancaria",
           "type": "proyecto",
           "description": "Prototipo visual de plataforma bancaria online con formularios, dashboard y módulos de cuentas.",
-          "date": "2023-06-10",
-          "technologies": ["HTML", "CSS", "JavaScript", "Responsive Design"],
-          "repoLink": "#",
-          "demoLink": "#"
+          "date": "2025-06-10",
+          "technologies": [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Responsive Design"
+          ],
+          "repoLink": "https://github.com/LuisK19/Proyecto-Banco-WEB",
+          "demoLink": "https://proyecto-banco-web.vercel.app/login"
         },
         {
           "name": "Portafolio del Curso",
           "type": "proyecto",
           "description": "Desarrollo incremental de portafolio web personal con trabajos académicos y perfil profesional.",
-          "date": "2023-06-28",
-          "technologies": ["HTML", "CSS", "JavaScript", "JSON", "Responsive"],
-          "repoLink": "#",
-          "demoLink": "#"
+          "date": "2025-06-28",
+          "technologies": [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "JSON",
+            "Responsive"
+          ],
+          "repoLink": "https://github.com/LuisK19/Portafolio-WEB",
+          "demoLink": "https://portafolio-luis-trejos.netlify.app/"
         }
       ]
     },
@@ -81,8 +177,14 @@
           "name": "Tarea 1 - API para SQL Server",
           "type": "tarea",
           "description": "Creación de API RESTful para comunicación con base de datos AdventureWorks en SQL Server.",
-          "date": "2023-09-14",
-          "technologies": ["SQL Server", "Node.js", "REST API", "Linux", "CRUD"],
+          "date": "2025-09-14",
+          "technologies": [
+            "SQL Server",
+            "Node.js",
+            "REST API",
+            "Linux",
+            "CRUD"
+          ],
           "repoLink": "#",
           "demoLink": "#"
         },
@@ -90,9 +192,14 @@
           "name": "Investigación - Replicaciones SQL Server",
           "type": "investigación",
           "description": "Configuración de replicaciones entre bases de datos AdventureWorks para tablas de producción.",
-          "date": "2023-09-23",
-          "technologies": ["SQL Server", "Replicación", "AdventureWorks", "Production Tables"],
-          "repoLink": "#",
+          "date": "2025-09-23",
+          "technologies": [
+            "SQL Server",
+            "Replicación",
+            "AdventureWorks",
+            "Production Tables"
+          ],
+          "repoLink": "https://github.com/LuisK19/Inv-Replicacion",
           "demoLink": "#"
         }
       ]
