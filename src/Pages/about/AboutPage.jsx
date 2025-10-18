@@ -13,6 +13,10 @@ const AboutPage = () => {
     text: ''
   });
 
+  //Paginacion
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
   useEffect(() => {
     // Load personal info
     fetch('/Data/personalInfo.json')
@@ -25,13 +29,23 @@ const AboutPage = () => {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          setRecommendations(data.recommendations);
+          const sortedRecommendations = sortRecommendationsByDate(data.recommendations);
+          setRecommendations(sortedRecommendations);
         } else {
           console.error('Error loading recommendations:', data.error);
         }
       })
       .catch(error => console.error('Error loading recommendations:', error));
   }, []);
+
+  // Función para ordenar recomendaciones por fecha (más reciente primero)
+  const sortRecommendationsByDate = (recs) => {
+    return recs.sort((a, b) => {
+      const dateA = a.date ? new Date(a.date) : new Date(0);
+      const dateB = b.date ? new Date(b.date) : new Date(0);
+      return dateB - dateA; // Orden descendente (más reciente primero)
+    });
+  };
 
   const handleRecommendationChange = (e) => {
     const { name, value } = e.target;
@@ -60,11 +74,13 @@ const AboutPage = () => {
       // Limpiar formulario
       setNewRecommendation({ name: '', position: '', text: '' });
 
-      // Recargar las recomendaciones
+      // Recargar y reordenar las recomendaciones
       const recommendationsResponse = await fetch('/.netlify/functions/get-recommendations');
       const recommendationsData = await recommendationsResponse.json();
       if (recommendationsData.success) {
-        setRecommendations(recommendationsData.recommendations);
+        const sortedRecommendations = sortRecommendationsByDate(recommendationsData.recommendations);
+        setRecommendations(sortedRecommendations);
+        setCurrentPage(1); // Volver a la primera página después de agregar
       }
 
       alert('¡Gracias por tu recomendación! Ha sido agregada exitosamente.');
@@ -72,6 +88,48 @@ const AboutPage = () => {
       console.error('Error completo:', error);
       alert('Error al guardar la recomendación: ' + error.message);
     }
+  };
+
+  // Pagina: Cálculo de elementos a mostrar
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentRecommendations = recommendations.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(recommendations.length / itemsPerPage);
+
+  // Cambiar página
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Navegación de páginas
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Generar números de página para mostrar
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    // Ajustar si estamos cerca del final
+    if (endPage - startPage + 1 < maxPagesToShow) {
+      startPage = Math.max(1, endPage - maxPagesToShow + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
   };
 
   const exportToPDF = async () => {
@@ -381,17 +439,65 @@ const AboutPage = () => {
             </form>
           </div>
 
+           {/*SECCIÓN DE PAGINACIÓN - INFO */}
+          {recommendations.length > 0 && (
+            <div className="pagination-info">
+              <p>
+                Mostrando {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, recommendations.length)} de {recommendations.length} recomendaciones
+                {totalPages > 1 && ` (Página ${currentPage} de ${totalPages})`}
+              </p>
+            </div>
+          )}
+
           <div className="recommendations-feed">
-            {recommendations.map((rec, index) => (
+            {currentRecommendations.map((rec, index) => (
               <div key={index} className="recommendation-card">
                 <div className="recommendation-header">
                   <h3>{rec.name}</h3>
                   <span className="position">{rec.position}</span>
                 </div>
                 <p className="text">"{rec.text}"</p>
+                {rec.date && (
+                  <div className="recommendation-date">
+                    <small>Agregado: {new Date(rec.date).toLocaleDateString('es-ES')}</small>
+                  </div>
+                )}
               </div>
             ))}
           </div>
+
+          {/*PAGINACIÓN - CONTROLES */}
+          {totalPages > 1 && (
+            <div className="pagination-controls">
+              <button 
+                onClick={prevPage} 
+                disabled={currentPage === 1}
+                className="pagination-btn"
+              >
+                ← Anterior
+              </button>
+              
+              <div className="page-numbers">
+                {getPageNumbers().map(number => (
+                  <button
+                    key={number}
+                    onClick={() => paginate(number)}
+                    className={`pagination-btn ${currentPage === number ? 'active' : ''}`}
+                  >
+                    {number}
+                  </button>
+                ))}
+              </div>
+              
+              <button 
+                onClick={nextPage} 
+                disabled={currentPage === totalPages}
+                className="pagination-btn"
+              >
+                Siguiente →
+              </button>
+            </div>
+          )}
         </section>
 
         <section className="export-section">

@@ -314,3 +314,127 @@
     font-size: 1.8rem;
   }
 }
+
+
+
+/* Estilos para paginación */
+.pagination-info {
+  text-align: center;
+  margin: var(--spacing-md) 0;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  padding: var(--spacing-sm);
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius-sm);
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid #ddd;
+  background-color: var(--color-white);
+  color: var(--primary-color);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination-btn.active {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border-color: var(--primary-color);
+  font-weight: 600;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 5px;
+}
+
+/* Estilo para la fecha de recomendación */
+.recommendation-date {
+  margin-top: var(--spacing-xs);
+  text-align: right;
+  color: var(--text-color);
+  font-style: italic;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Mejora visual para las tarjetas de recomendación con fecha */
+.recommendation-card {
+  padding: var(--spacing-md);
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--primary-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Indicador visual para recomendaciones recientes */
+.recommendation-card:first-child {
+  border-left: 4px solid var(--accent-color);
+  background-color: var(--light-green);
+}
+
+/* Responsive para paginación */
+@media (max-width: 768px) {
+  .pagination-controls {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .page-numbers {
+    order: -1;
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .pagination-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-info {
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-xs);
+  }
+  
+  .page-numbers {
+    gap: 3px;
+  }
+  
+  .pagination-btn {
+    min-width: 35px;
+    padding: 6px 8px;
+  }
+}
