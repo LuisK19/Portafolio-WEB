@@ -1,14 +1,32 @@
 import { Octokit } from "octokit";
 
+// Función auxiliar para leer el ReadableStream
+async function readStream(stream) {
+    const reader = stream.getReader();
+    const chunks = [];
+    
+    try {
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+        }
+    } finally {
+        reader.releaseLock();
+    }
+    
+    // Combinar los chunks en un string
+    const buffer = Buffer.concat(chunks);
+    return buffer.toString('utf8');
+}
+
 export default async (event) => {
-    // DIAGNÓSTICO COMPLETO DEL BODY
+    // DIAGNÓSTICO COMPLETO
     console.log('=== UPDATE-RECOMMENDATIONS DIAGNOSTIC ===');
     console.log('Event object keys:', Object.keys(event));
     console.log('HTTP Method from event:', event.httpMethod);
     console.log('Body type:', typeof event.body);
     console.log('Body content:', event.body);
-    console.log('Body is string?', typeof event.body === 'string');
-    console.log('Body is object?', typeof event.body === 'object' && event.body !== null);
     
     // FALLBACK: Siempre asumir POST para esta función
     const httpMethod = event.httpMethod || 'POST';
@@ -46,34 +64,51 @@ export default async (event) => {
         
         let parsedBody = {};
         
-        // MÚLTIPLES INTENTOS DE PARSEAR EL BODY
-        if (event.body) {
+        // MANEJO DE READABLE STREAM
+        if (event.body && typeof event.body === 'object' && event.body.getReader) {
+            console.log('Body is ReadableStream, reading...');
             try {
-                // Intento 1: Si es string JSON
-                if (typeof event.body === 'string') {
-                    parsedBody = JSON.parse(event.body);
-                } 
-                // Intento 2: Si ya es objeto
-                else if (typeof event.body === 'object' && event.body !== null) {
-                    parsedBody = event.body;
+                const bodyText = await readStream(event.body);
+                console.log('Body text extracted:', bodyText);
+                
+                if (bodyText) {
+                    parsedBody = JSON.parse(bodyText);
                 }
-                // Intento 3: Si es un objeto con propiedad body
-                else if (event.body.body && typeof event.body.body === 'string') {
-                    parsedBody = JSON.parse(event.body.body);
+            } catch (streamError) {
+                console.error('Error reading stream:', streamError);
+                return new Response(JSON.stringify({
+                    error: 'Error leyendo los datos de la solicitud'
+                }), {
+                    status: 400,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                });
+            }
+        } else {
+            // Manejo para otros tipos de body (por si acaso)
+            console.log('Body is not a ReadableStream, using direct approach');
+            if (event.body) {
+                try {
+                    if (typeof event.body === 'string') {
+                        parsedBody = JSON.parse(event.body);
+                    } else if (typeof event.body === 'object') {
+                        parsedBody = event.body;
+                    }
+                } catch (parseError) {
+                    console.error('Error parsing body:', parseError);
                 }
-            } catch (parseError) {
-                console.error('Error parsing body:', parseError);
-                // Continuar con objeto vacío
             }
         }
         
         console.log('Parsed body result:', parsedBody);
         console.log('Parsed body keys:', Object.keys(parsedBody));
 
-        // EXTRAER CAMPOS CON MÚLTIPLES ALTERNATIVAS
-        const name = parsedBody.name || parsedBody.nombre || '';
-        const position = parsedBody.position || parsedBody.puesto || parsedBody.role || '';
-        const text = parsedBody.text || parsedBody.texto || parsedBody.recommendation || parsedBody.recomendacion || '';
+        // EXTRAER CAMPOS
+        const name = parsedBody.name || '';
+        const position = parsedBody.position || '';
+        const text = parsedBody.text || '';
 
         console.log('Extracted fields:', { 
             name: name ? `"${name}" (length: ${name.length})` : 'EMPTY',
@@ -89,8 +124,7 @@ export default async (event) => {
                     name: name ? 'PRESENTE' : 'FALTANTE',
                     position: position ? 'PRESENTE' : 'FALTANTE',
                     text: text ? 'PRESENTE' : 'FALTANTE',
-                    receivedBody: parsedBody,
-                    rawBody: event.body
+                    receivedBody: parsedBody
                 }
             }), {
                 status: 400,
