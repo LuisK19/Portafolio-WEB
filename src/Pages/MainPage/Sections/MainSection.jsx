@@ -277,7 +277,7 @@ const MainSection = () => {
         <div className="container">
           <h2 className="section-title">Recomendaciones</h2>
           <div className="recommendations-container">
-            {recommendations.map((rec, index) => (
+            {recommendations.slice(0, 3).map((rec, index) => (
               <div key={index} className="recommendation-card">
                 <h3>{rec.name}</h3>
                 <p>{rec.position}</p>

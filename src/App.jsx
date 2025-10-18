@@ -14,11 +14,23 @@ import { useLocation } from 'react-router-dom';
 
 function App() {
   const ScrollToTop = () => {
-    const { pathname } = useLocation();
+    const { pathname, hash } = useLocation();
 
     useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [pathname]);
+      if (hash) {
+        // Esperar a que el DOM esté listo
+        setTimeout(() => {
+          const id = hash.replace('#', '');
+          const el = document.getElementById(id);
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 0);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, [pathname, hash]);
     return null;
   };
 

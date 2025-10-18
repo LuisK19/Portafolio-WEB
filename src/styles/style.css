@@ -15,12 +15,14 @@ header {
 }
 
 #main-nav {
-    padding: var(--spacing-sm) 0;
     position: relative;
 }
 
 #main-nav ul {
+    padding: var(--spacing-md) 0 var(--spacing-sm) 0; 
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     justify-content: center;
     list-style: none;
     flex-wrap: wrap;
@@ -104,6 +106,17 @@ header {
     border: none;
     cursor: pointer;
 }
+
+    
+    header {
+        min-height: 56px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
 
 .btn:hover {
     background: var(--hover-accent-color-2);
@@ -605,7 +618,7 @@ margin-top: 1rem;
     }
 
     #main-nav {
-        padding: var(--spacing-md) 0 var(--spacing-sm) 0; 
+        padding: var(--spacing-sm) 0 var(--spacing-sm) 0; 
     }
 
     #main-nav ul {
@@ -629,7 +642,7 @@ margin-top: 1rem;
     }
 
     .menu-toggle {
-        display: block;
+        display: contents;
         position: absolute;
         top: var(--spacing-sm);
         right: 0;
@@ -640,7 +653,16 @@ margin-top: 1rem;
         cursor: pointer;
         z-index: 101; 
         padding: var(--spacing-xs);
-        margin-top: -16px;
+        margin-top: 0;
+        height: 48px;
+        align-items: center;
+    }
+
+    header {
+        min-height: 56px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        box-sizing: border-box;
     }
 }
 
