@@ -3,14 +3,14 @@ import { Octokit } from "octokit";
 export default async (event) => {
     // DIAGNÓSTICO COMPLETO
     console.log('=== UPDATE-RECOMMENDATIONS DIAGNOSTIC ===');
-    console.log('Event object:', JSON.stringify(event, null, 2));
+    console.log('Event object keys:', Object.keys(event));
     console.log('HTTP Method from event:', event.httpMethod);
     console.log('Path:', event.path);
-    console.log('Body received:', event.body ? 'Yes' : 'No');
+    console.log('Body type:', typeof event.body);
+    console.log('Body content:', event.body);
     
-    // FALLBACK: Si httpMethod es undefined, inferimos basado en el contexto
-    // Para update, si hay body, asumimos que es POST
-    const httpMethod = event.httpMethod || (event.body ? 'POST' : 'GET');
+    // FALLBACK: Si httpMethod es undefined, asumimos POST si hay body
+    const httpMethod = event.httpMethod || 'POST';
     console.log('Using HTTP method:', httpMethod);
     
     // Handle CORS
@@ -27,7 +27,6 @@ export default async (event) => {
 
     // Solo permitir POST
     if (httpMethod !== 'POST') {
-        console.log('Method not allowed for update:', httpMethod);
         return new Response(JSON.stringify({ 
             error: 'Método no permitido. Use POST.',
             receivedMethod: httpMethod
@@ -42,9 +41,9 @@ export default async (event) => {
 
     // Lógica principal para POST
     try {
-        console.log('Processing POST request - Adding recommendation...');
+        console.log('Processing POST request...');
         
-        // Verificar que el body existe
+        // Verificar que el body existe y es string
         if (!event.body) {
             return new Response(JSON.stringify({ 
                 error: 'No se recibieron datos en el cuerpo de la solicitud' 
@@ -57,12 +56,41 @@ export default async (event) => {
             });
         }
 
-        const { name, position, text } = JSON.parse(event.body);
-        console.log('Parsed data:', { name, position, text: text?.substring(0, 50) + '...' });
+        // Parsear el body de forma segura
+        let parsedBody;
+        try {
+            // Si event.body ya es un objeto, usarlo directamente
+            if (typeof event.body === 'object' && !Array.isArray(event.body)) {
+                parsedBody = event.body;
+            } else {
+                // Si es string, parsearlo como JSON
+                parsedBody = JSON.parse(event.body);
+            }
+        } catch (parseError) {
+            console.error('Error parsing body:', parseError);
+            return new Response(JSON.stringify({
+                error: 'Formato de datos inválido. Se esperaba JSON.',
+                bodyReceived: event.body
+            }), {
+                status: 400,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }
+
+        const { name, position, text } = parsedBody;
+        console.log('Parsed data:', { 
+            name, 
+            position, 
+            textLength: text ? text.length : 0 
+        });
 
         if (!name || !position || !text) {
             return new Response(JSON.stringify({ 
-                error: 'Faltan campos requeridos: name, position, text' 
+                error: 'Faltan campos requeridos',
+                received: { name: !!name, position: !!position, text: !!text }
             }), {
                 status: 400,
                 headers: {
@@ -74,7 +102,16 @@ export default async (event) => {
 
         // Verificar que el token existe
         if (!process.env.GITHUB_TOKEN) {
-            throw new Error('GITHUB_TOKEN no está configurado en Netlify');
+            console.error('GITHUB_TOKEN no configurado');
+            return new Response(JSON.stringify({
+                error: 'Error de configuración del servidor'
+            }), {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
         }
 
         const octokit = new Octokit({
@@ -89,33 +126,31 @@ export default async (event) => {
         let fileSha;
 
         try {
-            console.log('Fetching current recommendations from GitHub...');
+            console.log('Fetching current file from GitHub...');
             const { data } = await octokit.rest.repos.getContent({
                 owner,
                 repo,
                 path,
             });
             
-            // Decodificar base64
             const content = Buffer.from(data.content, 'base64').toString('utf8');
             currentContent = JSON.parse(content);
             fileSha = data.sha;
-            console.log('Current recommendations count:', currentContent.length);
+            console.log('Current recommendations:', currentContent.length);
         } catch (error) {
-            console.log('Archivo no existe, creando nuevo:', error.message);
+            console.log('Creating new file:', error.message);
             currentContent = [];
         }
 
         // Agregar la nueva recomendación
         const newRecommendation = {
-            name,
-            position,
-            text,
+            name: name.trim(),
+            position: position.trim(),
+            text: text.trim(),
             date: new Date().toISOString().split('T')[0]
         };
 
         currentContent.push(newRecommendation);
-        console.log('New recommendations count:', currentContent.length);
 
         // Codificar a base64
         const contentBase64 = Buffer.from(JSON.stringify(currentContent, null, 2)).toString('base64');
@@ -129,15 +164,14 @@ export default async (event) => {
             content: contentBase64
         };
 
-        // Solo agregar SHA si el archivo ya existe
         if (fileSha) {
             updateParams.sha = fileSha;
         }
 
-        console.log('Updating file on GitHub...');
+        console.log('Updating GitHub file...');
         const { data } = await octokit.rest.repos.createOrUpdateFileContents(updateParams);
 
-        console.log('Successfully updated GitHub file');
+        console.log('Success! File updated on GitHub');
         return new Response(JSON.stringify({
             success: true,
             message: 'Recomendación agregada exitosamente',
@@ -152,10 +186,9 @@ export default async (event) => {
         });
 
     } catch (error) {
-        console.error('Error en update-recommendations:', error);
+        console.error('Error in update-recommendations:', error);
         return new Response(JSON.stringify({
-            error: 'Error interno del servidor: ' + error.message,
-            stack: error.stack
+            error: 'Error interno del servidor: ' + error.message
         }), {
             status: 500,
             headers: {
