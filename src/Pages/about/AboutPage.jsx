@@ -29,8 +29,9 @@ const AboutPage = () => {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          const sortedRecommendations = sortRecommendationsByDate(data.recommendations);
+          const sortedRecommendations = data.recommendations.reverse();
           setRecommendations(sortedRecommendations);
+          
         } else {
           console.error('Error loading recommendations:', data.error);
         }
