@@ -13,5 +13,11 @@
     "name": "Carlos García",
     "position": "Gerente en 123 S.A.",
     "text": "Recomiendo a Luis sin dudarlo, es un gran colaborador y siempre aporta ideas innovadoras en los proyectos."
+  },
+  {
+    "name": "Luis Carlos Trejos Rivera",
+    "position": "Desarrollador de Software Junior y Estudiante Ing en Computación",
+    "text": "Prueba",
+    "date": "2025-10-18"
   }
 ]
