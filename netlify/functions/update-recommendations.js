@@ -1,15 +1,16 @@
 import { Octokit } from "octokit";
 
 export default async (event) => {
-    // DIAGNÓSTICO COMPLETO
+    // DIAGNÓSTICO COMPLETO DEL BODY
     console.log('=== UPDATE-RECOMMENDATIONS DIAGNOSTIC ===');
     console.log('Event object keys:', Object.keys(event));
     console.log('HTTP Method from event:', event.httpMethod);
-    console.log('Path:', event.path);
     console.log('Body type:', typeof event.body);
     console.log('Body content:', event.body);
+    console.log('Body is string?', typeof event.body === 'string');
+    console.log('Body is object?', typeof event.body === 'object' && event.body !== null);
     
-    // FALLBACK: Si httpMethod es undefined, asumimos POST si hay body
+    // FALLBACK: Siempre asumir POST para esta función
     const httpMethod = event.httpMethod || 'POST';
     console.log('Using HTTP method:', httpMethod);
     
@@ -43,54 +44,54 @@ export default async (event) => {
     try {
         console.log('Processing POST request...');
         
-        // Verificar que el body existe y es string
-        if (!event.body) {
-            return new Response(JSON.stringify({ 
-                error: 'No se recibieron datos en el cuerpo de la solicitud' 
-            }), {
-                status: 400,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+        let parsedBody = {};
+        
+        // MÚLTIPLES INTENTOS DE PARSEAR EL BODY
+        if (event.body) {
+            try {
+                // Intento 1: Si es string JSON
+                if (typeof event.body === 'string') {
+                    parsedBody = JSON.parse(event.body);
+                } 
+                // Intento 2: Si ya es objeto
+                else if (typeof event.body === 'object' && event.body !== null) {
+                    parsedBody = event.body;
                 }
-            });
-        }
-
-        // Parsear el body de forma segura
-        let parsedBody;
-        try {
-            // Si event.body ya es un objeto, usarlo directamente
-            if (typeof event.body === 'object' && !Array.isArray(event.body)) {
-                parsedBody = event.body;
-            } else {
-                // Si es string, parsearlo como JSON
-                parsedBody = JSON.parse(event.body);
+                // Intento 3: Si es un objeto con propiedad body
+                else if (event.body.body && typeof event.body.body === 'string') {
+                    parsedBody = JSON.parse(event.body.body);
+                }
+            } catch (parseError) {
+                console.error('Error parsing body:', parseError);
+                // Continuar con objeto vacío
             }
-        } catch (parseError) {
-            console.error('Error parsing body:', parseError);
-            return new Response(JSON.stringify({
-                error: 'Formato de datos inválido. Se esperaba JSON.',
-                bodyReceived: event.body
-            }), {
-                status: 400,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
         }
+        
+        console.log('Parsed body result:', parsedBody);
+        console.log('Parsed body keys:', Object.keys(parsedBody));
 
-        const { name, position, text } = parsedBody;
-        console.log('Parsed data:', { 
-            name, 
-            position, 
-            textLength: text ? text.length : 0 
+        // EXTRAER CAMPOS CON MÚLTIPLES ALTERNATIVAS
+        const name = parsedBody.name || parsedBody.nombre || '';
+        const position = parsedBody.position || parsedBody.puesto || parsedBody.role || '';
+        const text = parsedBody.text || parsedBody.texto || parsedBody.recommendation || parsedBody.recomendacion || '';
+
+        console.log('Extracted fields:', { 
+            name: name ? `"${name}" (length: ${name.length})` : 'EMPTY',
+            position: position ? `"${position}" (length: ${position.length})` : 'EMPTY', 
+            text: text ? `"${text.substring(0, 50)}..." (length: ${text.length})` : 'EMPTY'
         });
 
+        // Validación de campos
         if (!name || !position || !text) {
             return new Response(JSON.stringify({ 
                 error: 'Faltan campos requeridos',
-                received: { name: !!name, position: !!position, text: !!text }
+                details: {
+                    name: name ? 'PRESENTE' : 'FALTANTE',
+                    position: position ? 'PRESENTE' : 'FALTANTE',
+                    text: text ? 'PRESENTE' : 'FALTANTE',
+                    receivedBody: parsedBody,
+                    rawBody: event.body
+                }
             }), {
                 status: 400,
                 headers: {
@@ -114,6 +115,7 @@ export default async (event) => {
             });
         }
 
+        // PROSEGUIR CON GITHUB API
         const octokit = new Octokit({
             auth: process.env.GITHUB_TOKEN
         });
@@ -126,7 +128,7 @@ export default async (event) => {
         let fileSha;
 
         try {
-            console.log('Fetching current file from GitHub...');
+            console.log('Fetching current recommendations from GitHub...');
             const { data } = await octokit.rest.repos.getContent({
                 owner,
                 repo,
@@ -136,9 +138,9 @@ export default async (event) => {
             const content = Buffer.from(data.content, 'base64').toString('utf8');
             currentContent = JSON.parse(content);
             fileSha = data.sha;
-            console.log('Current recommendations:', currentContent.length);
+            console.log('Current recommendations count:', currentContent.length);
         } catch (error) {
-            console.log('Creating new file:', error.message);
+            console.log('Creating new recommendations file:', error.message);
             currentContent = [];
         }
 
@@ -151,6 +153,7 @@ export default async (event) => {
         };
 
         currentContent.push(newRecommendation);
+        console.log('New recommendations count:', currentContent.length);
 
         // Codificar a base64
         const contentBase64 = Buffer.from(JSON.stringify(currentContent, null, 2)).toString('base64');
@@ -168,7 +171,7 @@ export default async (event) => {
             updateParams.sha = fileSha;
         }
 
-        console.log('Updating GitHub file...');
+        console.log('Updating file on GitHub...');
         const { data } = await octokit.rest.repos.createOrUpdateFileContents(updateParams);
 
         console.log('Success! File updated on GitHub');
