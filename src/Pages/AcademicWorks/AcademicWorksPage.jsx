@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { GithubOutlined, GlobalOutlined } from '@ant-design/icons';
 import '/src/styles/academicWorks.css';
 
 
@@ -354,14 +355,30 @@ const AcademicWorksPage = () => {
                                                     </div>
                                                     <div className="work-links">
                                                         {work.repoLink && work.repoLink !== '#' && (
-                                                            <a href={work.repoLink} target="_blank" rel="noopener noreferrer" className="work-link">
-                                                                📁 Repositorio
+                                                            <a
+                                                                href={work.repoLink}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="work-link rounded-btn"
+                                                            >
+                                                                <GithubOutlined style={{ marginRight: '6px', fontSize: '18px' }} />Repositorio
                                                             </a>
                                                         )}
                                                         {work.demoLink && work.demoLink !== '#' && (
-                                                            <a href={work.demoLink} target="_blank" rel="noopener noreferrer" className="work-link">
-                                                                🌐 Ver Demo
+                                                            <a
+                                                                href={work.demoLink}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="work-link rounded-btn"
+                                                            >
+                                                                <GlobalOutlined style={{ marginRight: '6px', fontSize: '18px' }} />Ver Demo
                                                             </a>
+                                                        )}
+                                                        {/* Mostrar nota si no hay links y existe note */}
+                                                        {(!work.repoLink || work.repoLink === '#') && (!work.demoLink || work.demoLink === '#') && work.note && (
+                                                            <div className="work-note">
+                                                                <span>{work.note}</span>
+                                                            </div>
                                                         )}
                                                     </div>
                                                 </div>

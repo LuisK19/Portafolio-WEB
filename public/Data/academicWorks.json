@@ -59,7 +59,7 @@
           ],
           "repoLink": "#",
           "demoLink": "#",
-          "notes": "Documento de texto - No hay repositorio de código"
+          "note": "Documento de texto - No hay repositorio de código"
         },
         {
           "name": "Laboratorio 5 - Diseño Responsive",
@@ -89,7 +89,7 @@
           ],
           "repoLink": "#",
           "demoLink": "#",
-          "notes": "Se entrego en una carpeta comprimida en el tecdigital - No hay repositorio público"
+          "note": "Se entrego en una carpeta comprimida en el tecdigital - No hay repositorio público"
         },
         {
           "name": "Laboratorio 7 - APIs REST: JSON y XML",
@@ -104,7 +104,7 @@
           ],
           "repoLink": "#",
           "demoLink": "#",
-          "notes": "Presentación grupal - No hay repositorio de código"
+          "note": "Presentación grupal - No hay repositorio de código"
         },
         {
           "name": "Laboratorio 8 - API REST con Node.js y Express",
