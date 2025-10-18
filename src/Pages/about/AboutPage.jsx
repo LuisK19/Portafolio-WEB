@@ -38,14 +38,6 @@ const AboutPage = () => {
       .catch(error => console.error('Error loading recommendations:', error));
   }, []);
 
-  // Función para ordenar recomendaciones por fecha (más reciente primero)
-  const sortRecommendationsByDate = (recs) => {
-    return recs.sort((a, b) => {
-      const dateA = a.date ? new Date(a.date) : new Date(0);
-      const dateB = b.date ? new Date(b.date) : new Date(0);
-      return dateB - dateA; // Orden descendente (más reciente primero)
-    });
-  };
 
   const handleRecommendationChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +70,7 @@ const AboutPage = () => {
       const recommendationsResponse = await fetch('/.netlify/functions/get-recommendations');
       const recommendationsData = await recommendationsResponse.json();
       if (recommendationsData.success) {
-        const sortedRecommendations = sortRecommendationsByDate(recommendationsData.recommendations);
+        const sortedRecommendations = recommendationsData.recommendations.reverse();
         setRecommendations(sortedRecommendations);
         setCurrentPage(1); // Volver a la primera página después de agregar
       }
@@ -439,7 +431,7 @@ const AboutPage = () => {
             </form>
           </div>
 
-           {/*SECCIÓN DE PAGINACIÓN - INFO */}
+          {/*SECCIÓN DE PAGINACIÓN - INFO */}
           {recommendations.length > 0 && (
             <div className="pagination-info">
               <p>
@@ -457,11 +449,6 @@ const AboutPage = () => {
                   <span className="position">{rec.position}</span>
                 </div>
                 <p className="text">"{rec.text}"</p>
-                {rec.date && (
-                  <div className="recommendation-date">
-                    <small>Agregado: {new Date(rec.date).toLocaleDateString('es-ES')}</small>
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -469,14 +456,14 @@ const AboutPage = () => {
           {/*PAGINACIÓN - CONTROLES */}
           {totalPages > 1 && (
             <div className="pagination-controls">
-              <button 
-                onClick={prevPage} 
+              <button
+                onClick={prevPage}
                 disabled={currentPage === 1}
                 className="pagination-btn"
               >
                 ← Anterior
               </button>
-              
+
               <div className="page-numbers">
                 {getPageNumbers().map(number => (
                   <button
@@ -488,9 +475,9 @@ const AboutPage = () => {
                   </button>
                 ))}
               </div>
-              
-              <button 
-                onClick={nextPage} 
+
+              <button
+                onClick={nextPage}
                 disabled={currentPage === totalPages}
                 className="pagination-btn"
               >
