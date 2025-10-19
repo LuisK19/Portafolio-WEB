@@ -8,8 +8,10 @@
     --primary-color: #00674F;
     --hover-primary-color: #3A9776;
     --secondary-color: #0A3C30;
+    --hover-secondary-color: #145D45;
 
     --accent-color: #3ebb9e;
+    --hover-accent-color: #58c4b1;
 
     --accent-color-2: #cd311f;
     --hover-accent-color-2: #e74c3c;
@@ -17,11 +19,10 @@
     --light-green: #d8f3dc;
     --dark-green: #081c15;
     --persian-indigo: #32127A;
-
-    --text-color: #333;
-    --color-white: #fff;
+   
+    --text-color: #333333;
+    --color-white: #ffffff;
     --background-color: #fefefe;
-
 
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -52,4 +53,47 @@ body {
 section {
     padding: 0;
     padding-top: var(--spacing-lg);
+}
+
+.dark-mode {
+    /* Dark Mode Color Palette */
+    --primary-color: #00DBA8;
+    --hover-primary-color: #58c4b1;
+    --secondary-color: #188d72;
+    --hover-secondary-color: #3A9776;
+
+    --accent-color: #00674F;
+    --hover-accent-color: #0A3C30;
+
+    --accent-color-2: #e74c3c;
+    --hover-accent-color-2: #ff6b5a;
+
+    --light-green: #0d2818;
+    --dark-green: #d8f3dc;
+    --persian-indigo: #7c5fd9;
+
+    --text-color: #e8e8e8;
+    --color-white: #1a1a1a;
+    --background-color: #121212;
+}
+
+
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    z-index: 1000;
 }

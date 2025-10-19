@@ -16,19 +16,19 @@
         },
         {
           "name": "Java",
-          "level": 70
+          "level": 50
         },
         {
           "name": "C#",
-          "level": 65
+          "level": 70
         },
         {
           "name": "JavaScript",
-          "level": 80
+          "level": 75
         },
         {
           "name": "HTML",
-          "level": 90
+          "level": 80
         },
         {
           "name": "CSS",
@@ -58,10 +58,6 @@
         {
           "name": "Teams",
           "level": 85
-        },
-        {
-          "name": "SharePoint",
-          "level": 75
         }
       ]
     },
@@ -153,7 +149,7 @@
     },
     {
       "name": "LinkedIn",
-      "url": "#",
+      "url": "https://www.linkedin.com/in/luistrejos/",
       "icon": "linkedin"
     },
     {

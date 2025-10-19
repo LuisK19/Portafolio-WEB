@@ -56,7 +56,7 @@ header {
     display: flex;
     align-items: center;
     min-height: calc(100vh - 140px);
-    background: linear-gradient(78deg, #00674f, #0a3c30);
+    background: linear-gradient(78deg, var(--primary-color), var(--secondary-color));
     background-size: 600% 600%;
 
     -webkit-animation: AnimationName 11s ease infinite;
@@ -137,7 +137,7 @@ main {
 /* Footer */
 footer {
     background-color: var(--secondary-color);
-    color: var(--color-white);
+    color: #ffffff;
     text-align: center;
     padding: var(--spacing-md);
 
@@ -181,7 +181,7 @@ footer {
 }
 
 .hobby-card {
-    background: white;
+    background: var(--color-white);
     padding: 2rem;
     border-radius: 8px;
     text-align: center;
@@ -265,7 +265,7 @@ footer {
 }
 
 .contact-form {
-    background: white;
+    background: var(--color-white);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: var(--shadow);
@@ -274,9 +274,10 @@ footer {
 .contact-form input,
 .contact-form textarea {
     width: 100%;
+    background-color: var(--color-white);
     padding: 12px;
     margin-bottom: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--secondary-color);
     border-radius: 4px;
     font-family: inherit;
 }
@@ -305,7 +306,7 @@ footer {
 
 
 .academic-work-card {
-    background: white;
+    background: var(--color-white);
     padding: 1.5rem;
     margin-bottom: 1rem;
     border-radius: 8px;
@@ -366,7 +367,7 @@ footer {
 }
 
 .recommendation-card {
-    background: white;
+    background: var(--color-white);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -380,7 +381,7 @@ footer {
 .recommendation-card p:last-child {
     font-style: italic;
     margin-top: 1rem;
-    color: #555;
+    color: var(--text-color);
 }
 
 
@@ -495,7 +496,7 @@ margin-top: 1rem;
 }
 
 .course-section {
-    background: white;
+    background: var(--color-white);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -507,7 +508,7 @@ margin-top: 1rem;
 }
 
 .academic-work-card {
-    background: #f9f9f9;
+    background: var(--background-color);
     padding: 1.5rem;
     border-radius: 6px;
     margin-bottom: 1rem;
@@ -523,7 +524,7 @@ margin-top: 1rem;
 .work-link {
     padding: 0.5rem 1rem;
     background: var(--primary-color);
-    color: white;
+    color: var(--color-white);
     text-decoration: none;
     border-radius: 4px;
     font-size: 0.9rem;
@@ -546,7 +547,7 @@ margin-top: 1rem;
     margin-top: 1rem;
     padding: 0.8rem 1.5rem;
     background: var(--primary-color);
-    color: white;
+    color: var(--color-white);
     text-decoration: none;
     border-radius: 5px;
     transition: background 0.3s ease;
@@ -639,6 +640,7 @@ margin-top: 1rem;
 
     .hero {
         padding: var(--spacing-lg) var(--spacing-sm);
+        min-height: calc(100vh - 250px);
     }
 
     .menu-toggle {
@@ -677,7 +679,7 @@ margin-top: 1rem;
 }
 
 .goal-card {
-  background: white;
+  background: var(--color-white);
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -799,7 +801,7 @@ margin-top: 1rem;
 }
 
 .achievement-card {
-  background: white;
+  background: var(--color-white);
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -866,7 +868,7 @@ margin-top: 1rem;
 }
 
 .achievement-description {
-  color: #555;
+  color: var(--text-color);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }

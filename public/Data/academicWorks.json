@@ -10,7 +10,7 @@
           "name": "Laboratorio 1 - Investigación Desarrollo Web Moderno",
           "type": "laboratorio",
           "description": "Investigación y documentación de herramientas modernas utilizadas en el desarrollo web profesional.",
-          "date": "2023-03-15",
+          "date": "2025-08-10",
           "technologies": [
             "HTML",
             "Markdown",
@@ -23,7 +23,7 @@
           "name": "Laboratorio 2 - Estructura Semántica y Accesibilidad",
           "type": "laboratorio",
           "description": "Creación de sitio web con estructura semántica HTML5 y prácticas de accesibilidad.",
-          "date": "2025-04-01",
+          "date": "2025-08-16",
           "technologies": [
             "HTML5",
             "CSS",
@@ -37,7 +37,7 @@
           "name": "Laboratorio 3 - Selectores, Box Model y Positioning",
           "type": "laboratorio",
           "description": "Aplicación de técnicas avanzadas de CSS3 con selectores, modelo de caja y posicionamiento.",
-          "date": "2025-04-20",
+          "date": "2025-08-25",
           "technologies": [
             "CSS3",
             "Flexbox",
@@ -51,7 +51,7 @@
           "name": "Laboratorio 4 - Accesibilidad Web",
           "type": "laboratorio",
           "description": "Análisis de problemas de accesibilidad y priorización de soluciones basadas en principios POUR.",
-          "date": "2025-05-05",
+          "date": "2025-08-29",
           "technologies": [
             "Accesibilidad",
             "WCAG",
@@ -65,7 +65,7 @@
           "name": "Laboratorio 5 - Diseño Responsive",
           "type": "laboratorio",
           "description": "Conversión del sitio a diseño responsive con tres breakpoints (móvil, tablet, desktop).",
-          "date": "2025-05-20",
+          "date": "2025-09-07",
           "technologies": [
             "Responsive Design",
             "Media Queries",
@@ -79,7 +79,7 @@
           "name": "Laboratorio 6 - Manipulación del DOM y Eventos",
           "type": "laboratorio",
           "description": "Ejercicios prácticos sobre manipulación del DOM y eventos en JavaScript. Incluye: 1) Selección de elementos, 2) Manipulación de contenido y atributos, 3) Creación y eliminación de nodos, 4) Manejo de eventos.",
-          "date": "2025-05-30",
+          "date": "2025-09-19",
           "technologies": [
             "JavaScript",
             "DOM",
@@ -95,7 +95,7 @@
           "name": "Laboratorio 7 - APIs REST: JSON y XML",
           "type": "presentación",
           "description": "Presentación sobre formatos de datos en APIs REST: JSON y XML.",
-          "date": "2025-06-15",
+          "date": "2025-09-15",
           "technologies": [
             "APIs REST",
             "JSON",
@@ -110,7 +110,7 @@
           "name": "Laboratorio 8 - API REST con Node.js y Express",
           "type": "laboratorio",
           "description": "Desarrollo de API REST con Node.js y Express con seguridad JWT, validaciones y documentación Postman.",
-          "date": "2025-09-25",
+          "date": "2025-10-03",
           "technologies": [
             "Node.js",
             "Express",
@@ -125,7 +125,7 @@
           "name": "Laboratorio 9 - GraphQL con Node.js",
           "type": "laboratorio",
           "description": "Transformación de endpoints REST a GraphQL con esquemas, consultas, mutaciones y autenticación JWT.",
-          "date": "2025-10-10",
+          "date": "2025-10-12",
           "technologies": [
             "Node.js",
             "GraphQL",
@@ -140,7 +140,7 @@
           "name": "Proyecto 1 - Plataforma Bancaria",
           "type": "proyecto",
           "description": "Prototipo visual de plataforma bancaria online con formularios, dashboard y módulos de cuentas.",
-          "date": "2025-06-10",
+          "date": "2025-09-28",
           "technologies": [
             "HTML",
             "CSS",
@@ -154,7 +154,7 @@
           "name": "Portafolio del Curso",
           "type": "proyecto",
           "description": "Desarrollo incremental de portafolio web personal con trabajos académicos y perfil profesional.",
-          "date": "2025-06-28",
+          "date": "2025-10-20",
           "technologies": [
             "HTML",
             "CSS",
@@ -186,7 +186,8 @@
             "CRUD"
           ],
           "repoLink": "#",
-          "demoLink": "#"
+          "demoLink": "#",
+          "note": "Entregado en TecDigital - No hay repositorio público"
         },
         {
           "name": "Investigación - Replicaciones SQL Server",
