@@ -1,7 +1,7 @@
 .about-page {
   min-height: 100vh;
   padding: 2rem 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background-color: var(--gray-50);
 }
 
 .about-header {
@@ -15,7 +15,7 @@
 }
 
 .about-header h1 {
-  color: var(--secondary-color);
+  color: var(--primary-color);
   margin-bottom: 0.5rem;
   font-size: 2.2rem;
 }
@@ -100,7 +100,7 @@
 
 .skill-category-card {
   padding: 1.2rem;
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
   border-radius: var(--border-radius);
   border-left: 4px solid var(--primary-color);
 }
@@ -175,23 +175,23 @@
 }
 
 .recommendations-section h2 {
-  color: var(--secondary-color);
-  margin-bottom: 1.2rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .add-recommendation {
-  padding: 1.2rem;
-  background-color: #f8f9fa;
+  padding: 1rem;
+  background-color: var(--color-white);
   border-radius: var(--border-radius);
   margin-bottom: 1.5rem;
 }
 
 .add-recommendation h3 {
-  color: var(--secondary-color);
-  margin-bottom: 0.8rem;
-  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .add-recommendation form {
@@ -209,10 +209,11 @@
 .add-recommendation input,
 .add-recommendation textarea {
   padding: 0.6rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--secondary-color);
   border-radius: var(--border-radius-sm);
   font-family: inherit;
   font-size: 0.9rem;
+  background-color: var(--background-color);
 }
 
 .add-recommendation textarea {

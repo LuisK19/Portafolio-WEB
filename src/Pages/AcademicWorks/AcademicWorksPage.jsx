@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { GithubOutlined, GlobalOutlined } from '@ant-design/icons';
+import { GithubOutlined, GlobalOutlined} from '@ant-design/icons';
 import '/src/styles/academicWorks.css';
 
 

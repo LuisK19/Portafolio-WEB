@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import SocialLinks from '../../components/SocialIcon';
 import '/src/styles/personalInfo.css';
 
-
 const AboutPage = () => {
   const [personalInfo, setPersonalInfo] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
@@ -24,7 +23,7 @@ const AboutPage = () => {
       .then(data => setPersonalInfo(data))
       .catch(error => console.error('Error loading personal info:', error));
 
-    // Load recommendations from the NEW function
+    // Load recommendations from the function
     fetch('/.netlify/functions/get-recommendations')
       .then(response => response.json())
       .then(data => {
@@ -347,7 +346,7 @@ const AboutPage = () => {
         <section className="profile-section">
           <div className="profile-content">
             <div className="profile-image">
-              <img src={personalInfo.photo || "/images/placeholder.jpg"} alt={personalInfo.name} />
+              <img src={personalInfo.photo} alt={personalInfo.name} />
             </div>
             <div className="profile-info">
               <h2>{personalInfo.name}</h2>

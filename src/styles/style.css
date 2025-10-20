@@ -43,7 +43,7 @@ header {
 }
 
 #main-nav a:hover {
-    color: var(--accent-color);
+    color: var(--hover-primary-color);
     background-color: rgba(0, 103, 79, 0.1);
 }
 
@@ -136,11 +136,10 @@ main {
 
 /* Footer */
 footer {
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-color-footer);
     color: #ffffff;
     text-align: center;
     padding: var(--spacing-md);
-
 }
 
 .menu-toggle {
