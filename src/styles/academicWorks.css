@@ -16,7 +16,7 @@
 }
 
 .works-header h1 {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     margin-bottom: var(--spacing-xs);
     font-size: 2.2rem;
 }

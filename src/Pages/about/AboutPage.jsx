@@ -389,7 +389,7 @@ const AboutPage = () => {
         </section>
 
         <section className="social-section">
-          <h2>Conectemos</h2>
+          <h2>Redes Sociales</h2>
           <SocialLinks personalInfo={personalInfo} />
         </section>
 

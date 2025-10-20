@@ -161,7 +161,14 @@ const MainSection = () => {
                 <h3>{cert.title}</h3>
                 <p className="certification-org">{cert.organization}</p>
                 <p className="certification-date">{cert.date}</p>
-                {cert.link && <a href={cert.link} className="certification-link">Ver certificado</a>}
+                <a
+                  href="https://www.linkedin.com/in/luistrejos/details/certifications/"
+                  className="certification-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado
+                </a>
               </div>
             ))}
           </div>
