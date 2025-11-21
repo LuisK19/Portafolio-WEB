@@ -215,6 +215,7 @@
   font-family: inherit;
   font-size: 0.9rem;
   background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .add-recommendation textarea {

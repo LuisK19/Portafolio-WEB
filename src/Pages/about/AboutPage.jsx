@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../contexts/LanguageContext';
 import SocialLinks from '../../components/SocialIcon';
 import '/src/styles/personalInfo.css';
 
 const AboutPage = () => {
+  const { t } = useLanguage();
   const [personalInfo, setPersonalInfo] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   const [newRecommendation, setNewRecommendation] = useState({
@@ -353,16 +355,16 @@ const AboutPage = () => {
               <h3>{personalInfo.title}</h3>
               <p>{personalInfo.bio}</p>
               <div className="contact-details">
-                <p><strong>Email:</strong> {personalInfo.email}</p>
-                <p><strong>Teléfono:</strong> {personalInfo.phone}</p>
-                <p><strong>Ubicación:</strong> {personalInfo.location}</p>
+                <p><strong>{t('about.email')}:</strong> {personalInfo.email}</p>
+                <p><strong>{t('about.phone')}:</strong> {personalInfo.phone}</p>
+                <p><strong>{t('about.location')}:</strong> {personalInfo.location}</p>
               </div>
             </div>
           </div>
         </section>
 
         <section className="skills-section">
-          <h2>Habilidades Técnicas</h2>
+          <h2>{t('about.skills')}</h2>
           <div className="skills-grid">
             {personalInfo.skills.map((category, index) => (
               <div key={index} className="skill-category-card">
@@ -389,44 +391,53 @@ const AboutPage = () => {
         </section>
 
         <section className="social-section">
-          <h2>Redes Sociales</h2>
+          <h2>{t('about.socialMedia')}</h2>
           <SocialLinks personalInfo={personalInfo} />
         </section>
 
         <section className="recommendations-section">
-          <h2>Recomendaciones</h2>
+          <h2>{t('about.recommendations')}</h2>
 
           <div className="add-recommendation">
-            <h3>Agregar una recomendación</h3>
+            <h3>{t('about.addRecommendation')}</h3>
             <form onSubmit={handleRecommendationSubmit}>
               <div className="form-row">
+                <label htmlFor="recommendation-name" className="sr-only">{t('about.yourName')}</label>
                 <input
+                  id="recommendation-name"
                   type="text"
                   name="name"
-                  placeholder="Tu nombre"
+                  placeholder={t('about.yourName')}
                   value={newRecommendation.name}
                   onChange={handleRecommendationChange}
                   required
+                  aria-label={t('about.yourName')}
                 />
+                <label htmlFor="recommendation-position" className="sr-only">{t('about.yourPosition')}</label>
                 <input
+                  id="recommendation-position"
                   type="text"
                   name="position"
-                  placeholder="Tu puesto o relación"
+                  placeholder={t('about.yourPosition')}
                   value={newRecommendation.position}
                   onChange={handleRecommendationChange}
                   required
+                  aria-label={t('about.yourPosition')}
                 />
               </div>
+              <label htmlFor="recommendation-text" className="sr-only">{t('about.yourRecommendation')}</label>
               <textarea
+                id="recommendation-text"
                 name="text"
-                placeholder="Tu recomendación"
+                placeholder={t('about.yourRecommendation')}
                 rows="3"
                 value={newRecommendation.text}
                 onChange={handleRecommendationChange}
                 required
+                aria-label={t('about.yourRecommendation')}
               ></textarea>
               <button type="submit" className="btn">
-                Enviar recomendación
+                {t('about.submit')}
               </button>
             </form>
           </div>
@@ -435,8 +446,8 @@ const AboutPage = () => {
           {recommendations.length > 0 && (
             <div className="pagination-info">
               <p>
-                Mostrando {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, recommendations.length)} de {recommendations.length} recomendaciones
-                {totalPages > 1 && ` (Página ${currentPage} de ${totalPages})`}
+                {t('about.showing')} {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, recommendations.length)} {t('about.of')} {recommendations.length} {t('about.recommendationsOf')}
+                {totalPages > 1 && ` (${t('about.page')} ${currentPage} ${t('about.of')} ${totalPages})`}
               </p>
             </div>
           )}
@@ -461,7 +472,7 @@ const AboutPage = () => {
                 disabled={currentPage === 1}
                 className="pagination-btn"
               >
-                ← Anterior
+                ← {t('about.previous')}
               </button>
 
               <div className="page-numbers">
@@ -481,7 +492,7 @@ const AboutPage = () => {
                 disabled={currentPage === totalPages}
                 className="pagination-btn"
               >
-                Siguiente →
+                {t('about.next')} →
               </button>
             </div>
           )}
@@ -489,12 +500,12 @@ const AboutPage = () => {
 
         <section className="export-section">
           <button onClick={exportToPDF} className="btn btn-primary">
-            Exportar CV a PDF
+            {t('about.downloadCV')}
           </button>
         </section>
 
         <div className="back-to-home">
-          <Link to="/" className="back-btn">← Volver al Inicio</Link>
+          <Link to="/" className="back-btn">← {t('academicWorks.backToPortfolio')}</Link>
         </div>
       </div>
     </div>

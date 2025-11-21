@@ -1,10 +1,13 @@
 import React from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer>
       <div className="container">
-        <p>Luis Trejos &copy; 2025. Todos los derechos reservados.</p>
+        <p>Luis Trejos &copy; 2025. {t('footer.rights')}.</p>
       </div>
     </footer>
   );

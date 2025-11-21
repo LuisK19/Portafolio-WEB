@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { GithubOutlined, GlobalOutlined} from '@ant-design/icons';
+import { GithubOutlined, GlobalOutlined } from '@ant-design/icons';
+import { useLanguage } from '../../contexts/LanguageContext';
 import '/src/styles/academicWorks.css';
 
 
 
 const AcademicWorksPage = () => {
+    const { t } = useLanguage();
     const [academicWorks, setAcademicWorks] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [expandedCourses, setExpandedCourses] = useState({});
     const [courseFilters, setCourseFilters] = useState({});
     const [globalFilters, setGlobalFilters] = useState({
-        course: [], 
+        course: [],
         dateRange: { start: '', end: '' }
     });
     const [filterMenuExpanded, setFilterMenuExpanded] = useState(false);
+    const [expandedFilters, setExpandedFilters] = useState({
+        globalCourse: false,
+        globalDate: false
+    });
+    const [expandedCourseFilters, setExpandedCourseFilters] = useState({});
 
     useEffect(() => {
         fetch('/Data/academicWorks.json')
@@ -56,6 +63,21 @@ const AcademicWorksPage = () => {
 
     const toggleFilterMenu = () => {
         setFilterMenuExpanded(!filterMenuExpanded);
+    };
+
+    const toggleGlobalFilter = (filterName) => {
+        setExpandedFilters(prev => ({
+            ...prev,
+            [filterName]: !prev[filterName]
+        }));
+    };
+
+    const toggleCourseFilter = (courseCode, filterName) => {
+        const key = `${courseCode}-${filterName}`;
+        setExpandedCourseFilters(prev => ({
+            ...prev,
+            [key]: !prev[key]
+        }));
     };
 
     const handleGlobalFilterChange = (filterType, value) => {
@@ -161,7 +183,7 @@ const AcademicWorksPage = () => {
         return (
             <div className="works-page">
                 <div className="container">
-                    <div className="loading">Cargando trabajos académicos...</div>
+                    <div className="loading">{t('academicWorks.loading')}</div>
                 </div>
             </div>
         );
@@ -172,9 +194,9 @@ const AcademicWorksPage = () => {
             <div className="works-page">
                 <div className="container">
                     <div className="error">
-                        <h2>Error al cargar los datos</h2>
+                        <h2>{t('academicWorks.errorTitle')}</h2>
                         <p>{error}</p>
-                        <Link to="/" className="back-btn">← Volver al Portafolio</Link>
+                        <Link to="/" className="back-btn">{t('academicWorks.backToPortfolio')}</Link>
                     </div>
                 </div>
             </div>
@@ -186,8 +208,8 @@ const AcademicWorksPage = () => {
             <div className="works-page">
                 <div className="container">
                     <div className="no-data">
-                        <h2>No hay trabajos académicos disponibles</h2>
-                        <Link to="/" className="back-btn">← Volver al Portafolio</Link>
+                        <h2>{t('academicWorks.noDataTitle')}</h2>
+                        <Link to="/" className="back-btn">{t('academicWorks.backToPortfolio')}</Link>
                     </div>
                 </div>
             </div>
@@ -198,16 +220,25 @@ const AcademicWorksPage = () => {
         <div className="works-page">
             <div className="container">
                 <header className="works-header">
-                    <h1>Mis Trabajos Académicos</h1>
-                    <p>Documentación oficial de mis trabajos académicos y proyectos realizados</p>
+                    <h1>{t('academicWorks.title')}</h1>
+                    <p>{t('academicWorks.description')}</p>
                 </header>
 
                 <div className="global-filters">
 
-                        <div className="filter-row">
-                            <div className="filter-group compact">
-                                <h4>Filtrar por curso:</h4>
-                                <div className="checkbox-grid">
+                    <div className="filter-row">
+                        <div className="filter-group compact">
+                            <div 
+                                className="filter-header" 
+                                onClick={() => toggleGlobalFilter('globalCourse')}
+                            >
+                                <h4>{t('academicWorks.filterByCourse')}</h4>
+                                <span className={`filter-toggle-icon ${expandedFilters.globalCourse ? 'expanded' : ''}`}>
+                                    ▼
+                                </span>
+                            </div>
+                            <div className={`checkbox-list-wrapper ${expandedFilters.globalCourse ? 'expanded' : ''}`}>
+                                <div className="checkbox-list">
                                     {academicWorks.courses.map(course => (
                                         <React.Fragment key={course.code}>
                                             <input
@@ -229,29 +260,44 @@ const AcademicWorksPage = () => {
                                     ))}
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="filter-group compact">
-                                <h4>Filtrar por fecha:</h4>
+                        <div className="filter-group compact">
+                            <div 
+                                className="filter-header" 
+                                onClick={() => toggleGlobalFilter('globalDate')}
+                            >
+                                <h4>{t('academicWorks.filterByDate')}</h4>
+                                <span className={`filter-toggle-icon ${expandedFilters.globalDate ? 'expanded' : ''}`}>
+                                    ▼
+                                </span>
+                            </div>
+                            <div className={`checkbox-list-wrapper ${expandedFilters.globalDate ? 'expanded' : ''}`}>
                                 <div className="date-filters compact">
-                                    <label>
-                                        Desde:
+                                    <label htmlFor="date-filter-start">
+                                        {t('academicWorks.dateFrom')}:
                                         <input
+                                            id="date-filter-start"
                                             type="date"
                                             value={globalFilters.dateRange.start}
                                             onChange={(e) => handleGlobalFilterChange('dateRange', { start: e.target.value })}
+                                            aria-label="Fecha de inicio para filtrar trabajos"
                                         />
                                     </label>
-                                    <label>
-                                        Hasta:
+                                    <label htmlFor="date-filter-end">
+                                        {t('academicWorks.dateTo')}:
                                         <input
+                                            id="date-filter-end"
                                             type="date"
                                             value={globalFilters.dateRange.end}
                                             onChange={(e) => handleGlobalFilterChange('dateRange', { end: e.target.value })}
+                                            aria-label="Fecha de fin para filtrar trabajos"
                                         />
                                     </label>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                 </div>
 
@@ -273,7 +319,7 @@ const AcademicWorksPage = () => {
                                 <div className="course-header">
                                     <div className="course-info">
                                         <h3>{course.code} - {course.name}</h3>
-                                        <p><strong>Semestre:</strong> {course.semester}</p>
+                                        <p><strong>{t('academicWorks.semester')}:</strong> {course.semester}</p>
                                         <p className="course-desc">{course.description}</p>
                                     </div>
 
@@ -282,7 +328,7 @@ const AcademicWorksPage = () => {
                                         onClick={() => toggleCourse(course.code)}
                                         aria-expanded={expandedCourses[course.code]}
                                     >
-                                        {expandedCourses[course.code] ? 'Ocultar trabajos' : 'Mostrar trabajos'}
+                                        {expandedCourses[course.code] ? t('academicWorks.hideWorks') : t('academicWorks.showWorks')}
                                         <span>{expandedCourses[course.code] ? '▼' : '►'}</span>
                                     </button>
                                 </div>
@@ -290,52 +336,72 @@ const AcademicWorksPage = () => {
                                 <div className={`course-content ${expandedCourses[course.code] ? 'expanded' : 'collapsed'}`}>
                                     <div className="course-filters">
                                         <div className="filter-group compact">
-                                            <h4>Filtrar por tipo:</h4>
-                                            <div className="checkbox-grid">
-                                                {availableFilters.types.map(type => (
-                                                    <React.Fragment key={type}>
-                                                        <input
-                                                            id={`type-${course.code}-${type}`}
-                                                            className="inp-cbx"
-                                                            type="checkbox"
-                                                            checked={courseFilters[course.code]?.type.includes(type) || false}
-                                                            onChange={() => handleCourseFilterChange(course.code, 'type', type)}
-                                                        />
-                                                        <label className="cbx" htmlFor={`type-${course.code}-${type}`}>
-                                                            <span>
-                                                                <svg width="12px" height="10px" viewBox="0 0 12 10">
-                                                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                                                </svg>
-                                                            </span>
-                                                            <span>{type}</span>
-                                                        </label>
-                                                    </React.Fragment>
-                                                ))}
+                                            <div 
+                                                className="filter-header" 
+                                                onClick={() => toggleCourseFilter(course.code, 'type')}
+                                            >
+                                                <h4>{t('academicWorks.filterByType')}</h4>
+                                                <span className={`filter-toggle-icon ${expandedCourseFilters[`${course.code}-type`] ? 'expanded' : ''}`}>
+                                                    ▼
+                                                </span>
+                                            </div>
+                                            <div className={`checkbox-list-wrapper ${expandedCourseFilters[`${course.code}-type`] ? 'expanded' : ''}`}>
+                                                <div className="checkbox-list">
+                                                    {availableFilters.types.map(type => (
+                                                        <React.Fragment key={type}>
+                                                            <input
+                                                                id={`type-${course.code}-${type}`}
+                                                                className="inp-cbx"
+                                                                type="checkbox"
+                                                                checked={courseFilters[course.code]?.type.includes(type) || false}
+                                                                onChange={() => handleCourseFilterChange(course.code, 'type', type)}
+                                                            />
+                                                            <label className="cbx" htmlFor={`type-${course.code}-${type}`}>
+                                                                <span>
+                                                                    <svg width="12px" height="10px" viewBox="0 0 12 10">
+                                                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                                                    </svg>
+                                                                </span>
+                                                                <span>{type}</span>
+                                                            </label>
+                                                        </React.Fragment>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div className="filter-group compact">
-                                            <h4>Filtrar por tecnología:</h4>
-                                            <div className="checkbox-grid">
-                                                {availableFilters.technologies.map(tech => (
-                                                    <React.Fragment key={tech}>
-                                                        <input
-                                                            id={`tech-${course.code}-${tech}`}
-                                                            className="inp-cbx"
-                                                            type="checkbox"
-                                                            checked={courseFilters[course.code]?.technology.includes(tech) || false}
-                                                            onChange={() => handleCourseFilterChange(course.code, 'technology', tech)}
-                                                        />
-                                                        <label className="cbx" htmlFor={`tech-${course.code}-${tech}`}>
-                                                            <span>
-                                                                <svg width="12px" height="10px" viewBox="0 0 12 10">
-                                                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                                                </svg>
-                                                            </span>
-                                                            <span>{tech}</span>
-                                                        </label>
-                                                    </React.Fragment>
-                                                ))}
+                                            <div 
+                                                className="filter-header" 
+                                                onClick={() => toggleCourseFilter(course.code, 'tech')}
+                                            >
+                                                <h4>{t('academicWorks.filterByTech')}</h4>
+                                                <span className={`filter-toggle-icon ${expandedCourseFilters[`${course.code}-tech`] ? 'expanded' : ''}`}>
+                                                    ▼
+                                                </span>
+                                            </div>
+                                            <div className={`checkbox-list-wrapper ${expandedCourseFilters[`${course.code}-tech`] ? 'expanded' : ''}`}>
+                                                <div className="checkbox-list">
+                                                    {availableFilters.technologies.map(tech => (
+                                                        <React.Fragment key={tech}>
+                                                            <input
+                                                                id={`tech-${course.code}-${tech}`}
+                                                                className="inp-cbx"
+                                                                type="checkbox"
+                                                                checked={courseFilters[course.code]?.technology.includes(tech) || false}
+                                                                onChange={() => handleCourseFilterChange(course.code, 'technology', tech)}
+                                                            />
+                                                            <label className="cbx" htmlFor={`tech-${course.code}-${tech}`}>
+                                                                <span>
+                                                                    <svg width="12px" height="10px" viewBox="0 0 12 10">
+                                                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                                                    </svg>
+                                                                </span>
+                                                                <span>{tech}</span>
+                                                            </label>
+                                                        </React.Fragment>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -350,8 +416,8 @@ const AcademicWorksPage = () => {
                                                     </div>
                                                     <p className="work-description">{work.description}</p>
                                                     <div className="work-details">
-                                                        <p><strong>Fecha:</strong> {work.date}</p>
-                                                        <p><strong>Tecnologías:</strong> {work.technologies.join(', ')}</p>
+                                                        <p><strong>{t('academicWorks.date')}:</strong> {work.date}</p>
+                                                        <p><strong>{t('academicWorks.technologies')}:</strong> {work.technologies.join(', ')}</p>
                                                     </div>
                                                     <div className="work-links">
                                                         {work.repoLink && work.repoLink !== '#' && (
@@ -361,7 +427,7 @@ const AcademicWorksPage = () => {
                                                                 rel="noopener noreferrer"
                                                                 className="work-link rounded-btn"
                                                             >
-                                                                <GithubOutlined style={{ marginRight: '6px', fontSize: '18px' }} />Repositorio
+                                                                <GithubOutlined style={{ marginRight: '6px', fontSize: '18px' }} />{t('academicWorks.repository')}
                                                             </a>
                                                         )}
                                                         {work.demoLink && work.demoLink !== '#' && (
@@ -371,7 +437,7 @@ const AcademicWorksPage = () => {
                                                                 rel="noopener noreferrer"
                                                                 className="work-link rounded-btn"
                                                             >
-                                                                <GlobalOutlined style={{ marginRight: '6px', fontSize: '18px' }} />Ver Demo
+                                                                <GlobalOutlined style={{ marginRight: '6px', fontSize: '18px' }} />{t('academicWorks.viewDemo')}
                                                             </a>
                                                         )}
                                                         {/* Mostrar nota si no hay links y existe note */}
@@ -386,7 +452,7 @@ const AcademicWorksPage = () => {
                                         </div>
                                     ) : (
                                         <div className="no-works-message">
-                                            <p>No hay trabajos que coincidan con los filtros seleccionados.</p>
+                                            <p>{t('academicWorks.noWorks')}</p>
                                         </div>
                                     )}
                                 </div>
@@ -396,8 +462,8 @@ const AcademicWorksPage = () => {
                 </div>
 
                 <footer className="works-footer">
-                    <p>Para más información sobre estos trabajos, contáctame directamente.</p>
-                    <Link to="/" className="back-btn">← Volver al Portafolio</Link>
+                    <p>{t('academicWorks.contactInfo')}</p>
+                    <Link to="/" className="back-btn">{t('academicWorks.backToPortfolio')}</Link>
                 </footer>
             </div>
         </div>

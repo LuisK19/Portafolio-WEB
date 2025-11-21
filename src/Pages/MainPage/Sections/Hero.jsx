@@ -1,4 +1,8 @@
+import { useLanguage } from '../../../contexts/LanguageContext';
+
 const Hero = () => {
+  const { t } = useLanguage();
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -16,11 +20,11 @@ const Hero = () => {
   return (
     <section id="inicio" className="hero">
       <div className="container">
-        <h1>Bienvenido a mi Portafolio</h1>
-        <p>Hola, soy Luis Trejos. Este es mi portafolio académico y profesional donde muestro mis trabajos, habilidades y proyectos.</p>
-        <p>El propósito de este sitio es integrar todos los conocimientos adquiridos en el curso de Introducción al Desarrollo de Páginas Web.</p>
+        <h1>{t('mainPage.welcomeTitle')}</h1>
+        <p>{t('hero.greeting')} Luis Trejos. {t('hero.description')}.</p>
+        <p>{t('mainPage.welcomeDescription')}.</p>
         <button className="btn" onClick={() => scrollToSection('trabajos-academicos')}>
-          Ver mis trabajos
+          {t('hero.viewWorks')}
         </button>
       </div>
     </section>

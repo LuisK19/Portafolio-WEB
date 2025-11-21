@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const CertificationsPage = () => {
+  const { t } = useLanguage();
   const [certifications, setCertifications] = useState([]);
   const [filteredCerts, setFilteredCerts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -39,8 +41,8 @@ const CertificationsPage = () => {
     <div className="certifications-page">
       <div className="container">
         <header className="certifications-header">
-          <h1>Mis Certificaciones</h1>
-          <p>Documentación oficial de mis estudios, cursos y certificaciones obtenidas</p>
+          <h1>{t('certifications.title')}</h1>
+          <p>{t('certifications.description')}</p>
         </header>
 
         <div className="filters">
@@ -75,10 +77,10 @@ const CertificationsPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Ver Certificado
+                    {t('certifications.viewCertificate')}
                   </a>
                 ) : (
-                  <span className="no-cert-available">Certificado no disponible online</span>
+                  <span className="no-cert-available">{t('common.error')}</span>
                 )}
               </div>
             </div>
@@ -87,13 +89,13 @@ const CertificationsPage = () => {
 
         {filteredCerts.length === 0 && (
           <div className="no-results">
-            <p>No se encontraron certificaciones en esta categoría</p>
+            <p>{t('academicWorks.noWorks')}</p>
           </div>
         )}
 
         <footer className="certifications-footer">
-          <p>Para verificar la autenticidad de estas certificaciones, contáctame directamente.</p>
-          <Link to="/" className="back-btn">← Volver al Portafolio</Link>
+          <p>{t('academicWorks.contactInfo')}</p>
+          <Link to="/" className="back-btn">← {t('certifications.backToPortfolio')}</Link>
 
         </footer>
 

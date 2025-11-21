@@ -1,7 +1,10 @@
 
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
+  const { t } = useLanguage();
+  
   // Función para cerrar el menú
   const handleClick = () => {
     if (isMenuOpen && setIsMenuOpen) {
@@ -10,12 +13,12 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
   };
   return (
     <ul>
-      <li><Link to="/" onClick={handleClick}>Inicio</Link></li>
-      <li><Link to="/about" onClick={handleClick}>Sobre Mí</Link></li>
-      <li><Link to="/academicWorks" onClick={handleClick}>Trabajos</Link></li>
+      <li><Link to="/" onClick={handleClick}>{t('nav.home')}</Link></li>
+      <li><Link to="/about" onClick={handleClick}>{t('nav.about')}</Link></li>
+      <li><Link to="/academicWorks" onClick={handleClick}>{t('nav.academicWorks')}</Link></li>
       <li><a href='/#recomendaciones' onClick={handleClick}>Recomendaciones</a></li>
       <li><a href='/#hobbies' onClick={handleClick}>Hobbies</a></li>
-      <li><Link to="/certifications" onClick={handleClick}>Certificaciones</Link></li>
+      <li><Link to="/certifications" onClick={handleClick}>{t('nav.certifications')}</Link></li>
       <li><a href='/#contacto' onClick={handleClick}>Contacto</a></li>
     </ul>
   );

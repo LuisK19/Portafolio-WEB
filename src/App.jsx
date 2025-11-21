@@ -6,6 +6,7 @@ import CertificationsPage from './Pages/Certifications/CertificationsPage';
 import AcademicWorksPage from './Pages/AcademicWorks/AcademicWorksPage';
 import AboutPage from './Pages/about/AboutPage';
 import DarkModeToggle from './components/Layout/DarkMode';
+import LanguageSelector from './components/Layout/LanguageSelector';
 import { Routes, Route } from 'react-router-dom';
 import './styles/base.css';
 import './styles/style.css';
@@ -40,6 +41,7 @@ function App() {
       <ScrollToTop />
       <Header />
       <DarkModeToggle />
+      <LanguageSelector />
 
       <main>
         <Routes>
