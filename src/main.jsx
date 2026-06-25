@@ -7,7 +7,6 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import './styles/base.css'
 import './styles/style.css'
 import './styles/certifications.css';
-import './styles/academicWorks.css';
 
 
 

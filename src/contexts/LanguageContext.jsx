@@ -16,11 +16,15 @@ export const LanguageProvider = ({ children }) => {
   });
   const [translations, setTranslations] = useState({});
   const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
     const loadTranslations = async () => {
       try {
-        setLoading(true);
+        // Solo mostrar loading en la primera carga
+        if (initialLoad) {
+          setLoading(true);
+        }
         const response = await fetch(`/Data/translations-${language}.json`);
         const data = await response.json();
         setTranslations(data);
@@ -28,11 +32,12 @@ export const LanguageProvider = ({ children }) => {
         console.error('Error loading translations:', error);
       } finally {
         setLoading(false);
+        setInitialLoad(false);
       }
     };
 
     loadTranslations();
-  }, [language]);
+  }, [language, initialLoad]);
 
   const changeLanguage = (newLanguage) => {
     setLanguage(newLanguage);
@@ -41,6 +46,11 @@ export const LanguageProvider = ({ children }) => {
   };
 
   const t = (key) => {
+    // Si las traducciones aún están cargando, retornar el key
+    if (loading || !translations || Object.keys(translations).length === 0) {
+      return key;
+    }
+    
     const keys = key.split('.');
     let value = translations;
     

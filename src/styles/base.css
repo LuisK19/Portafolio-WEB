@@ -51,6 +51,16 @@
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     --secondary-color-footer: #0A3C30;
+
+
+    --Ink-Black: #000814;
+    --Prussian-Blue: #001d3d;
+    --Oxford-Navy: #003566;
+    --School-Bus-Yellow: #ffc300;
+    --Gold: #ffd60a;
+    
+    --bg-white: #fefefe;
+
 }
 
 html,
@@ -59,7 +69,7 @@ body {
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background: var(--background-color);

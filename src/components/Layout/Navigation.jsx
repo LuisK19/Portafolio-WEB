@@ -16,10 +16,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
       <li><Link to="/" onClick={handleClick}>{t('nav.home')}</Link></li>
       <li><Link to="/about" onClick={handleClick}>{t('nav.about')}</Link></li>
       <li><Link to="/academicWorks" onClick={handleClick}>{t('nav.academicWorks')}</Link></li>
-      <li><a href='/#recomendaciones' onClick={handleClick}>Recomendaciones</a></li>
-      <li><a href='/#hobbies' onClick={handleClick}>Hobbies</a></li>
       <li><Link to="/certifications" onClick={handleClick}>{t('nav.certifications')}</Link></li>
-      <li><a href='/#contacto' onClick={handleClick}>Contacto</a></li>
     </ul>
   );
 };

@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import SocialIcon from '../../../components/SocialIcon';
+import { useState, useEffect } from 'react';
 import SocialLinks from '../../../components/SocialIcon';
-import { Link } from 'react-router-dom';
+import FeatureWorks from '/src/components/Works/FeatureWorks.jsx';  
 import { useLanguage } from '../../../contexts/LanguageContext';
+
 
 const MainSection = () => {
   const { t } = useLanguage();
   const [personalInfo, setPersonalInfo] = useState(null);
   const [academicWorks, setAcademicWorks] = useState(null);
-  const [hobbiesData, setHobbiesData] = useState([]);
-  const [recommendations, setRecommendations] = useState([]);
-  const [goalsData, setGoalsData] = useState([]);
-  const [achievementsData, setAchievementsData] = useState([]);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     fetch('/Data/personalInfo.json')
@@ -25,25 +20,6 @@ const MainSection = () => {
       .then(data => setAcademicWorks(data))
       .catch(error => console.error('Error loading academic works:', error));
 
-    fetch('/Data/hobbies.json')
-      .then(response => response.json())
-      .then(data => setHobbiesData(data))
-      .catch(error => console.error('Error loading hobbies:', error));
-
-    fetch('/Data/recommendations.json')
-      .then(response => response.json())
-      .then(data => setRecommendations(data))
-      .catch(error => console.error('Error loading recommendations:', error));
-
-    fetch('/Data/goals.json')
-      .then(response => response.json())
-      .then(data => setGoalsData(data))
-      .catch(error => console.error('Error loading goals:', error));
-
-    fetch('/Data/achievements.json')
-      .then(response => response.json())
-      .then(data => setAchievementsData(data))
-      .catch(error => console.error('Error loading achievements:', error));
   }, []);
 
   const [formData, setFormData] = useState({
@@ -53,29 +29,6 @@ const MainSection = () => {
     message: ''
   });
 
-  const getStatusClass = (status) => {
-    const statusMap = {
-      'Completado': 'status-completed',
-      'Completed': 'status-completed',
-      'En progreso': 'status-progress',
-      'In progress': 'status-progress',
-      'Planificado': 'status-planned',
-      'Planned': 'status-planned'
-    };
-    return statusMap[status] || '';
-  };
-
-  const getCategoryClass = (category) => {
-    const categoryMap = {
-      'Académico': 'category-academic',
-      'Academic': 'category-academic',
-      'Competencia': 'category-competition',
-      'Competition': 'category-competition',
-      'Desarrollo Personal': 'category-personal',
-      'Personal Development': 'category-personal'
-    };
-    return categoryMap[category] || '';
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -98,9 +51,7 @@ const MainSection = () => {
     });
   };
 
-  const toggleWorksList = () => {
-    setIsExpanded(!isExpanded);
-  };
+
 
   if (!personalInfo || !academicWorks) {
     return <div>{t('common.loading')}</div>;
@@ -112,203 +63,23 @@ const MainSection = () => {
 
   return (
     <>
-      <section id="about" className="about">
+      <section id="inicio" className="hero">
         <div className="container">
-          <h2>{t('mainPage.aboutTitle')}</h2>
-          <p>{personalInfo.bio}</p>
+          <h1>{t('mainPage.welcomeTitle')}</h1>
+          <p>{t('hero.greeting')} Luis Trejos. {t('hero.description')}.</p>
+          <p>{t('mainPage.welcomeDescription')}.</p>
         </div>
       </section>
 
-      <section id="trabajos-academicos" className="section">
-        <div className="container">
-          <h2 className="section-title">{t('mainPage.academicWorksTitle')}</h2>
-          {academicWorks.courses.slice(0, 1).map((course, index) => (
-            <div key={index} className="course-section">
-              <h3>{course.code} - {course.name}</h3>
-              <p><strong>{t('academicWorks.semester')}:</strong> {course.semester}</p>
-              <p>{course.description}</p>
-
-
-              <button
-                className='toggle-works-btn'
-                onClick={toggleWorksList}
-                aria-expanded={isExpanded}
-              >
-                {isExpanded ? t('academicWorks.hideWorks') : t('academicWorks.showWorks')}
-                <span>{isExpanded ? '▼' : '►'}</span>
-              </button>
-
-              <div className={`works-list ${isExpanded ? 'expanded' : 'collapsed'}`}>
-
-                {course.works.slice(0, 2).map((work, workIndex) => (
-                  <div key={workIndex} className="academic-work-card">
-                    <h4>{work.name}</h4>
-                    <p><strong>{t('mainPage.type')}:</strong> {work.type}</p>
-                    <p>{work.description}</p>
-                    <p><strong>{t('academicWorks.date')}:</strong> {work.date}</p>
-                    <p><strong>{t('academicWorks.technologies')}:</strong> {work.technologies.join(', ')}</p>
-                    {work.repoLink && <a href={work.repoLink} target="_blank" rel="noopener noreferrer">{t('academicWorks.repository')}</a>}
-                    {work.demoLink && <a href={work.demoLink} target="_blank" rel="noopener noreferrer">{t('mainPage.website')}</a>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <Link to="/academicWorks" className="btn btn-section">
-            {t('mainPage.viewAllWorks')}
-          </Link>
-        </div>
-      </section>
-
-      <section id="certifications" className="certifications">
-        <div className="container">
-          <h2 className="section-title">{t('mainPage.certificationsTitle')}</h2>
-          <div className="certifications-container">
-            {personalInfo.certifications.slice(0, 3).map((cert, index) => ( // Muestra solo 3
-              <div key={index} className="certification-card">
-                <h3>{cert.title}</h3>
-                <p className="certification-org">{cert.organization}</p>
-                <p className="certification-date">{cert.date}</p>
-                <a
-                  href="https://www.linkedin.com/in/luistrejos/details/certifications/"
-                  className="certification-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t('mainPage.viewCertificate')}
-                </a>
-              </div>
-            ))}
-          </div>
-          <Link to="/certifications" className="btn btn-section">
-            {t('mainPage.viewAllCertifications')}
-          </Link>
-        </div>
-      </section>
-
-      <section id="hobbies" className="section">
-        <div className="container">
-          <h2 className="section-title">{t('mainPage.hobbiesTitle')}</h2>
-          <div className="hobbies-container">
-            {hobbiesData.map((hobby, index) => (
-              <div key={index} className="hobby-card">
-                <div className="hobby-icon">{hobby.icon}</div>
-                <h3>{hobby.title}</h3>
-                <p>{hobby.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="goals" className="section">
-        <div className="container">
-          <h2 className="section-title">{t('mainPage.goalsTitle')}</h2>
-          <p className="section-subtitle">{t('mainPage.goalsSubtitle')}</p>
-
-          <div className="goals-grid">
-            {goalsData.map(goal => (
-              <div key={goal.id} className="goal-card">
-                <div className="goal-header">
-                  <h3>{goal.title}</h3>
-                  <span className={`status-badge ${getStatusClass(goal.status)}`}>
-                    {goal.status}
-                  </span>
-                </div>
-
-                <div className="goal-meta">
-                  <span className="goal-category">{goal.category}</span>
-                  <span className="goal-timeline">{goal.timeline}</span>
-                </div>
-
-                <p className="goal-description">{goal.description}</p>
-
-                <div className="goal-actions">
-                  <h4>{t('mainPage.plannedActions')}</h4>
-                  <ul>
-                    {goal.actions.map((action, index) => (
-                      <li key={index}>{action}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="goal-progress">
-                  <div className="progress-bar">
-                    <div
-                      className={`progress-fill ${getStatusClass(goal.status)}`}
-                      style={{
-                        width:
-                          goal.status === 'Completado' ? '100%' :
-                            goal.status === 'En progreso' ? '50%' : '10%'
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="achievements" className="section">
-        <div className="container">
-          <h2 className="section-title">{t('mainPage.achievementsTitle')}</h2>
-          <p className="section-subtitle">{t('mainPage.achievementsSubtitle')}</p>
-
-          <div className="achievements-grid">
-            {achievementsData.map(achievement => (
-              <div key={achievement.id} className="achievement-card">
-                <div className="achievement-header">
-                  <h3>{achievement.title}</h3>
-                  <span className={`category-badge ${getCategoryClass(achievement.category)}`}>
-                    {achievement.category}
-                  </span>
-                </div>
-
-                <div className="achievement-meta">
-                  <span className="achievement-organization">{achievement.organization}</span>
-                  <span className="achievement-date">{achievement.date}</span>
-                </div>
-
-                <p className="achievement-description">{achievement.description}</p>
-
-                {achievement.technologies && achievement.technologies.length > 0 && (
-                  <div className="achievement-technologies">
-                    <h4>{t('mainPage.technologiesUsed')}</h4>
-                    <div className="technologies-list">
-                      {achievement.technologies.map((tech, index) => (
-                        <span key={index} className="technology-tag">{tech}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="recomendaciones" className="section">
-        <div className="container">
-          <h2 className="section-title">{t('mainPage.recommendationsTitle')}</h2>
-          <div className="recommendations-container">
-            {recommendations.slice(0, 3).map((rec, index) => (
-              <div key={index} className="recommendation-card">
-                <h3>{rec.name}</h3>
-                <p>{rec.position}</p>
-                <p>"{rec.text}"</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section id="feature-works" className="section"> 
+        <FeatureWorks />
       </section>
 
       <section id="contacto" className="section">
         <div className="container">
-          <h2 className="section-title">{t('mainPage.contactTitle')}</h2>
+          <h2 className="section-title">{t('mainPage.contactInfoTitle')}</h2>
           <div className="contact-container">
             <div className="contact-info">
-              <h3>{t('mainPage.contactInfoTitle')}</h3>
               <p>{t('mainPage.contactDescription')}</p>
               <div className="contact-details">
                 <div className="contact-item">

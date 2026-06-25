@@ -1,0 +1,103 @@
+.worksPage {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--background-color) 100%);
+    padding: var(--spacing-lg) 0;
+    flex: 1;
+}
+
+.worksHeader {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    position: static;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.worksHeader h1 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+    font-size: 2.2rem;
+}
+
+.worksHeader p {
+    color: var(--text-color);
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.worksFooter {
+    text-align: center;
+    padding: var(--spacing-md);
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-top: auto;
+}
+
+.worksFooter p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-green);
+    font-size: 0.9rem;
+}
+
+.backBtn {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    text-decoration: none;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.backBtn:hover {
+    background-color: var(--hover-primary-color);
+}
+
+.loading,
+.error,
+.noData {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin: var(--spacing-lg) 0;
+}
+
+.loading {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.error h2 {
+    color: var(--accent-color-2);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.2rem;
+}
+
+.noData h2 {
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .worksHeader h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .worksHeader {
+        padding: 1rem;
+    }
+
+    .worksHeader h1 {
+        font-size: 1.6rem;
+    }
+}

@@ -1,5 +1,4 @@
 import Header from './components/Layout/Header';
-import Hero from './Pages/MainPage/Sections/Hero';
 import MainSection from './Pages/MainPage/Sections/MainSection';
 import Footer from './components/Layout/Footer';
 import CertificationsPage from './Pages/Certifications/CertificationsPage';
@@ -45,12 +44,7 @@ function App() {
 
       <main>
         <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <MainSection />
-            </>
-          } />
+          <Route path="/" element={<MainSection />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
           <Route path="/academicWorks" element={<AcademicWorksPage />} />
