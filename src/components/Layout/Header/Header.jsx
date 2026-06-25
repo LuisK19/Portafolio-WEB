@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navigation from './Navigation';
+import Navigation from '../Navbar/Navigation';
 import { useLocation } from 'react-router-dom';
 
 const Header = () => {

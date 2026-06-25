@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SocialLinks from '../../../components/SocialIcon';
 import FeatureWorks from '/src/components/Works/FeatureWorks.jsx';  
-import { useLanguage } from '../../../contexts/LanguageContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 
 const MainSection = () => {
