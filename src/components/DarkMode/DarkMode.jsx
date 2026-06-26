@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-SunOutlined, MoonOutlined
-} from '@ant-design/icons';
+import { SunOutlined, MoonOutlined } from '@ant-design/icons';
+import styles from './DarkMode.module.css';
 
 function DarkModeToggle() {
   const [dark, setDark] = useState(false);
@@ -24,7 +23,7 @@ function DarkModeToggle() {
   };
 
   return (
-    <button className='dark-mode-toggle' onClick={toggleDarkMode}>
+    <button className={styles.darkModeToggle} onClick={toggleDarkMode}>
       {dark ? <SunOutlined /> : <MoonOutlined />}
     </button>
   );

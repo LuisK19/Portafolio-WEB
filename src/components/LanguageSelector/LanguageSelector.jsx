@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLanguage } from '../../contexts/LanguageContext';
-import './LanguageSelector.css';
+import { useLanguage } from '../../Contexts/LanguageContext';
+import styles from './LanguageSelector.module.css';
 
 const LanguageSelector = () => {
   const { language, changeLanguage } = useLanguage();
@@ -11,14 +11,14 @@ const LanguageSelector = () => {
   };
 
   return (
-    <button 
-      className="language-selector"
+    <button
+      className={styles.languageSelector}
       onClick={toggleLanguage}
       aria-label={`Cambiar idioma a ${language === 'es' ? 'inglés' : 'español'}`}
       title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
     >
-      <span className="language-flag">{language === 'es' ? '🇺🇸' : '🇪🇸'}</span>
-      <span className="language-text">{language === 'es' ? 'EN' : 'ES'}</span>
+      <span className={styles.languageFlag}>{language === 'es' ? '🇺🇸' : '🇪🇸'}</span>
+      <span className={styles.languageText}>{language === 'es' ? 'EN' : 'ES'}</span>
     </button>
   );
 };
