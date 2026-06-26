@@ -1,0 +1,100 @@
+.nav {
+  position: relative;
+}
+
+.nav ul {
+  padding: 0.3rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.nav li {
+  margin: 0 var(--spacing-xs);
+}
+
+/* Por default (variante "solid"): texto oscuro.
+   Es lo seguro para cualquier página que no tenga
+   un fondo oscuro/gradiente detrás del header. */
+.nav a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  display: inline-block;
+  border-radius: var(--border-radius);
+}
+
+.nav a:hover {
+  color: var(--hover-primary-color);
+  background-color: rgba(0, 103, 79, 0.1);
+}
+
+/* Variante "light": solo cuando el header flota
+   transparente sobre el hero oscuro de Home (sin scroll) */
+.light a {
+  color: var(--color-white);
+}
+
+.light a:hover {
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.menuToggle {
+  display: none;
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.light .menuToggle {
+  color: var(--color-white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav {
+    padding: var(--spacing-sm) 0 var(--spacing-sm) 0;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    align-items: center;
+    display: none;
+  }
+
+  .nav.active ul {
+    display: flex;
+  }
+
+  .nav li {
+    margin: var(--spacing-xs) 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .menuToggle {
+    display: contents;
+    position: absolute;
+    top: var(--spacing-sm);
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 101;
+    padding: var(--spacing-xs);
+    margin-top: 0;
+    height: 48px;
+    align-items: center;
+  }
+}

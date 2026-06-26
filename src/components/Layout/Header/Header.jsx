@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Navigation from '../Navbar/Navigation';
+import Navbar from '../Navbar/Navbar';
 import { useLocation } from 'react-router-dom';
+import styles from './Header.module.css';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,21 +26,18 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // "light": header transparente flotando sobre el hero oscuro de Home (sin scroll).
+  // "solid": cualquier otro caso (Home con scroll, o cualquier otra página con fondo claro).
+  const navVariant = isHomePage && !isScrolled ? 'light' : 'solid';
 
   return (
-    <header className={`header ${isHomePage && isScrolled ? 'scrolled' : ''}`}>
-      <div className="header-container">
-        <nav id="main-nav" className={isMenuOpen ? 'active' : ''}>
-          
-          <button className="menu-toggle" onClick={toggleMenu}>
-            {isMenuOpen ? '✕' : '☰'}
-          </button>
-
-          <Navigation isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-        </nav>
+    <header className={`${styles.header} ${isHomePage && isScrolled ? styles.scrolled : ''}`}>
+      <div className={styles.headerContainer}>
+        <Navbar
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
+          variant={navVariant}
+        />
       </div>
     </header>
   );
