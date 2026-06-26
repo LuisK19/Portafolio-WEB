@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GithubOutlined, GlobalOutlined } from '@ant-design/icons';
 import { useLanguage } from '../../contexts/LanguageContext';
-import styles from './AcademicWorks.module.css';
+import styles from './Projects.module.css';
 
-const AcademicWorksPage = () => {
+const ProjectsPage = () => {
     const { t } = useLanguage();
     const [academicWorks, setAcademicWorks] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const AcademicWorksPage = () => {
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Error loading academic works:', error);
+                console.error('Error loading projects:', error);
                 setError(error.message);
                 setLoading(false);
             });
@@ -31,7 +31,7 @@ const AcademicWorksPage = () => {
 
     if (loading) {
         return (
-            <div className={styles.worksPage}>
+            <div className={styles.projectsPage}>
                 <div className="container">
                     <div className={styles.loading}>{t('academicWorks.loading')}</div>
                 </div>
@@ -41,7 +41,7 @@ const AcademicWorksPage = () => {
 
     if (error) {
         return (
-            <div className={styles.worksPage}>
+            <div className={styles.projectsPage}>
                 <div className="container">
                     <div className={styles.error}>
                         <h2>{t('academicWorks.errorTitle')}</h2>
@@ -55,7 +55,7 @@ const AcademicWorksPage = () => {
 
     if (!academicWorks || !academicWorks.courses || academicWorks.courses.length === 0) {
         return (
-            <div className={styles.worksPage}>
+            <div className={styles.projectsPage}>
                 <div className="container">
                     <div className={styles.noData}>
                         <h2>{t('academicWorks.noDataTitle')}</h2>
@@ -67,14 +67,14 @@ const AcademicWorksPage = () => {
     }
 
     return (
-        <div className={styles.worksPage}>
+        <div className={styles.projectsPage}>
             <div className="container">
-                <header className={styles.worksHeader}>
+                <header className={styles.projectsHeader}>
                     <h1>{t('academicWorks.title')}</h1>
                     <p>{t('academicWorks.description')}</p>
                 </header>
 
-                <footer className={styles.worksFooter}>
+                <footer className={styles.projectsFooter}>
                     <p>{t('academicWorks.contactInfo')}</p>
                     <Link to="/" className={styles.backBtn}>{t('academicWorks.backToPortfolio')}</Link>
                 </footer>
@@ -83,4 +83,4 @@ const AcademicWorksPage = () => {
     );
 };
 
-export default AcademicWorksPage;
+export default ProjectsPage;
