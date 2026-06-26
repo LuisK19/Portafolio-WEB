@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
+import styles from './Certifications.module.css';
 
 const CertificationsPage = () => {
   const { t } = useLanguage();
@@ -38,19 +39,19 @@ const CertificationsPage = () => {
   ];
 
   return (
-    <div className="certifications-page">
+    <div className={styles.certificationsPage}>
       <div className="container">
-        <header className="certifications-header">
+        <header className={styles.certificationsHeader}>
           <h1>{t('certifications.title')}</h1>
           <p>{t('certifications.description')}</p>
         </header>
 
-        <div className="filters">
+        <div className={styles.filters}>
           <p>Filtrar por categoría:</p>
           {categories.map(category => (
             <button
               key={category.id}
-              className={`filter-btn ${selectedCategory === category.id ? 'active' : ''}`}
+              className={`${styles.filterBtn} ${selectedCategory === category.id ? styles.active : ''}`}
               onClick={() => filterByCategory(category.id)}
             >
               {category.name}
@@ -58,29 +59,29 @@ const CertificationsPage = () => {
           ))}
         </div>
 
-        <div className="certifications-grid">
+        <div className={styles.certificationsGrid}>
           {filteredCerts.map((cert, index) => (
-            <div key={index} className="certification-card">
-              <div className="cert-header">
+            <div key={index} className={styles.certificationCard}>
+              <div className={styles.certHeader}>
                 <h3>{cert.title}</h3>
-                <span className="organization-badge">{cert.organization}</span>
+                <span className={styles.organizationBadge}>{cert.organization}</span>
               </div>
-              <div className="cert-details">
-                <p className="date">Emitido: {cert.date}</p>
-                <p className="cert-id">ID: {cert.certId || 'N/A'}</p>
+              <div className={styles.certDetails}>
+                <p className={styles.date}>Emitido: {cert.date}</p>
+                <p className={styles.certId}>ID: {cert.certId || 'N/A'}</p>
               </div>
-              <div className="cert-actions">
+              <div className={styles.certActions}>
                 {cert.link && cert.link !== '#' ? (
                   <a
                     href={cert.link}
-                    className="view-cert-btn"
+                    className={styles.viewCertBtn}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     {t('certifications.viewCertificate')}
                   </a>
                 ) : (
-                  <span className="no-cert-available">{t('common.error')}</span>
+                  <span className={styles.noCertAvailable}>{t('common.error')}</span>
                 )}
               </div>
             </div>
@@ -88,17 +89,15 @@ const CertificationsPage = () => {
         </div>
 
         {filteredCerts.length === 0 && (
-          <div className="no-results">
+          <div className={styles.noResults}>
             <p>{t('academicWorks.noWorks')}</p>
           </div>
         )}
 
-        <footer className="certifications-footer">
+        <footer className={styles.certificationsFooter}>
           <p>{t('academicWorks.contactInfo')}</p>
-          <Link to="/" className="back-btn">← {t('certifications.backToPortfolio')}</Link>
-
+          <Link to="/" className={styles.backBtn}>← {t('certifications.backToPortfolio')}</Link>
         </footer>
-
       </div>
     </div>
   );
