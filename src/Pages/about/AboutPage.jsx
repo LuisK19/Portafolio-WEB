@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useLanguage } from '../../contexts/LanguageContext';
-import SocialLinks from '../../components/SocialIcon';
-import '/src/styles/personalInfo.css';
+import { useLanguage } from '../../Contexts/LanguageContext';
+import SocialLinks from '../../components/SocialIcons/SocialIcon';
+import styles from './AboutPage.module.css';
 
 const AboutPage = () => {
   const { t } = useLanguage();
@@ -32,7 +32,7 @@ const AboutPage = () => {
         if (data.success) {
           const sortedRecommendations = data.recommendations.reverse();
           setRecommendations(sortedRecommendations);
-          
+
         } else {
           console.error('Error loading recommendations:', data.error);
         }
@@ -334,27 +334,27 @@ const AboutPage = () => {
 
 
   if (!personalInfo) {
-    return <div className="loading">Cargando información...</div>;
+    return <div className={styles.loading}>Cargando información...</div>;
   }
 
   return (
-    <div className="about-page">
+    <div className={styles.aboutPage}>
       <div className="container">
-        <header className="about-header">
+        <header className={styles.aboutHeader}>
           <h1>Sobre Mí</h1>
           <p>Conoce más sobre mi trayectoria profesional y habilidades</p>
         </header>
 
-        <section className="profile-section">
-          <div className="profile-content">
-            <div className="profile-image">
+        <section className={styles.profileSection}>
+          <div className={styles.profileContent}>
+            <div className={styles.profileImage}>
               <img src={personalInfo.photo} alt={personalInfo.name} />
             </div>
-            <div className="profile-info">
+            <div className={styles.profileInfo}>
               <h2>{personalInfo.name}</h2>
               <h3>{personalInfo.title}</h3>
               <p>{personalInfo.bio}</p>
-              <div className="contact-details">
+              <div className={styles.contactDetails}>
                 <p><strong>{t('about.email')}:</strong> {personalInfo.email}</p>
                 <p><strong>{t('about.phone')}:</strong> {personalInfo.phone}</p>
                 <p><strong>{t('about.location')}:</strong> {personalInfo.location}</p>
@@ -363,22 +363,22 @@ const AboutPage = () => {
           </div>
         </section>
 
-        <section className="skills-section">
+        <section className={styles.skillsSection}>
           <h2>{t('about.skills')}</h2>
-          <div className="skills-grid">
+          <div className={styles.skillsGrid}>
             {personalInfo.skills.map((category, index) => (
-              <div key={index} className="skill-category-card">
+              <div key={index} className={styles.skillCategoryCard}>
                 <h3>{category.category}</h3>
-                <div className="skills-list">
+                <div className={styles.skillsList}>
                   {category.items.map((skill, skillIndex) => (
-                    <div key={skillIndex} className="skill-item">
-                      <div className="skill-header">
-                        <span className="skill-name">{skill.name}</span>
-                        <span className="skill-percentage">{skill.level}%</span>
+                    <div key={skillIndex} className={styles.skillItem}>
+                      <div className={styles.skillHeader}>
+                        <span className={styles.skillName}>{skill.name}</span>
+                        <span className={styles.skillPercentage}>{skill.level}%</span>
                       </div>
-                      <div className="skill-bar">
+                      <div className={styles.skillBar}>
                         <div
-                          className="skill-progress"
+                          className={styles.skillProgress}
                           style={{ width: `${skill.level}%` }}
                         ></div>
                       </div>
@@ -390,18 +390,18 @@ const AboutPage = () => {
           </div>
         </section>
 
-        <section className="social-section">
+        <section className={styles.socialSection}>
           <h2>{t('about.socialMedia')}</h2>
           <SocialLinks personalInfo={personalInfo} />
         </section>
 
-        <section className="recommendations-section">
+        <section className={styles.recommendationsSection}>
           <h2>{t('about.recommendations')}</h2>
 
-          <div className="add-recommendation">
+          <div className={styles.addRecommendation}>
             <h3>{t('about.addRecommendation')}</h3>
             <form onSubmit={handleRecommendationSubmit}>
-              <div className="form-row">
+              <div className={styles.formRow}>
                 <label htmlFor="recommendation-name" className="sr-only">{t('about.yourName')}</label>
                 <input
                   id="recommendation-name"
@@ -444,7 +444,7 @@ const AboutPage = () => {
 
           {/*SECCIÓN DE PAGINACIÓN - INFO */}
           {recommendations.length > 0 && (
-            <div className="pagination-info">
+            <div className={styles.paginationInfo}>
               <p>
                 {t('about.showing')} {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, recommendations.length)} {t('about.of')} {recommendations.length} {t('about.recommendationsOf')}
                 {totalPages > 1 && ` (${t('about.page')} ${currentPage} ${t('about.of')} ${totalPages})`}
@@ -452,35 +452,35 @@ const AboutPage = () => {
             </div>
           )}
 
-          <div className="recommendations-feed">
+          <div className={styles.recommendationsFeed}>
             {currentRecommendations.map((rec, index) => (
-              <div key={index} className="recommendation-card">
-                <div className="recommendation-header">
+              <div key={index} className={styles.recommendationCard}>
+                <div className={styles.recommendationHeader}>
                   <h3>{rec.name}</h3>
-                  <span className="position">{rec.position}</span>
+                  <span className={styles.position}>{rec.position}</span>
                 </div>
-                <p className="text">"{rec.text}"</p>
+                <p className={styles.text}>"{rec.text}"</p>
               </div>
             ))}
           </div>
 
           {/*PAGINACIÓN - CONTROLES */}
           {totalPages > 1 && (
-            <div className="pagination-controls">
+            <div className={styles.paginationControls}>
               <button
                 onClick={prevPage}
                 disabled={currentPage === 1}
-                className="pagination-btn"
+                className={styles.paginationBtn}
               >
                 ← {t('about.previous')}
               </button>
 
-              <div className="page-numbers">
+              <div className={styles.pageNumbers}>
                 {getPageNumbers().map(number => (
                   <button
                     key={number}
                     onClick={() => paginate(number)}
-                    className={`pagination-btn ${currentPage === number ? 'active' : ''}`}
+                    className={`${styles.paginationBtn} ${currentPage === number ? styles.active : ''}`}
                   >
                     {number}
                   </button>
@@ -490,7 +490,7 @@ const AboutPage = () => {
               <button
                 onClick={nextPage}
                 disabled={currentPage === totalPages}
-                className="pagination-btn"
+                className={styles.paginationBtn}
               >
                 {t('about.next')} →
               </button>
@@ -498,13 +498,13 @@ const AboutPage = () => {
           )}
         </section>
 
-        <section className="export-section">
-          <button onClick={exportToPDF} className="btn btn-primary">
+        <section className={styles.exportSection}>
+          <button onClick={exportToPDF} className="btn">
             {t('about.downloadCV')}
           </button>
         </section>
 
-        <div className="back-to-home">
+        <div className={styles.backToHome}>
           <Link to="/" className="back-btn">← {t('academicWorks.backToPortfolio')}</Link>
         </div>
       </div>
