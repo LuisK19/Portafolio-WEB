@@ -1,40 +1,15 @@
-import Header from './components/Layout/Header';
-import MainSection from './Pages/MainPage/Sections/MainSection';
-import Footer from './components/Layout/Footer';
+import Header from './components/Layout/Header/Header';
+import MainPage from './Pages/MainPage/MainPage';
+import Footer from './components/Layout/Footer/Footer';
 import CertificationsPage from './Pages/Certifications/CertificationsPage';
-import AcademicWorksPage from './Pages/AcademicWorks/AcademicWorksPage';
+import ProjectsPage from './Pages/Projects/ProjectsPage';
 import AboutPage from './Pages/about/AboutPage';
-import DarkModeToggle from './components/Layout/DarkMode';
-import LanguageSelector from './components/Layout/LanguageSelector';
+import DarkModeToggle from './components/DarkMode/DarkMode';
+import LanguageSelector from './components/LanguageSelector/LanguageSelector';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import { Routes, Route } from 'react-router-dom';
-import './styles/base.css';
-import './styles/style.css';
-
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
 function App() {
-  const ScrollToTop = () => {
-    const { pathname, hash } = useLocation();
-
-    useEffect(() => {
-      if (hash) {
-        // Esperar a que el DOM esté listo
-        setTimeout(() => {
-          const id = hash.replace('#', '');
-          const el = document.getElementById(id);
-          if (el) {
-            const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-          }
-        }, 0);
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }, [pathname, hash]);
-    return null;
-  };
-
   return (
     <div className="App">
       <ScrollToTop />
@@ -44,10 +19,10 @@ function App() {
 
       <main>
         <Routes>
-          <Route path="/" element={<MainSection />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
-          <Route path="/academicWorks" element={<AcademicWorksPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
         </Routes>
       </main>
       <Footer />
