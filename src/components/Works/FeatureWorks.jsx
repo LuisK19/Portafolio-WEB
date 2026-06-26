@@ -1,4 +1,4 @@
-import { useLanguage } from '../../contexts/LanguageContext';
+import { useLanguage } from '../../Contexts/LanguageContext';
 import MainWork from './MainWork/MainWork';
 import WorkItem from './WorkItem/WorkItem';
 import styles from '/src/components/Works/FeatureWorks.module.css';
