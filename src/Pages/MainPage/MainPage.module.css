@@ -1,0 +1,105 @@
+/* Hero */
+.hero {
+  color: var(--color-white);
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-md);
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(78deg, var(--primary-color), var(--secondary-color));
+  background-size: 600% 600%;
+
+  -webkit-animation: heroGradient 11s ease infinite;
+  -moz-animation: heroGradient 11s ease infinite;
+  animation: heroGradient 11s ease infinite;
+}
+
+@-webkit-keyframes heroGradient {
+  0% { background-position: 0% 32%; }
+  50% { background-position: 100% 69%; }
+  100% { background-position: 0% 32%; }
+}
+@-moz-keyframes heroGradient {
+  0% { background-position: 0% 32%; }
+  50% { background-position: 100% 69%; }
+  100% { background-position: 0% 32%; }
+}
+@keyframes heroGradient {
+  0% { background-position: 0% 32%; }
+  50% { background-position: 100% 69%; }
+  100% { background-position: 0% 32%; }
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  margin-bottom: var(--spacing-md);
+}
+
+.hero p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--spacing-lg) var(--spacing-sm);
+    min-height: calc(100vh - 250px);
+  }
+}
+
+/* Contacto */
+.contactContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.contactInfo h3 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.contactDetails {
+  margin: 1.5rem 0;
+}
+
+.contactItem {
+  margin-bottom: 0.8rem;
+}
+
+.contactForm {
+  background: var(--color-white);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.contactForm input,
+.contactForm textarea {
+  width: 100%;
+  background-color: var(--color-white);
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: 4px;
+  font-family: inherit;
+  color: var(--text-color);
+}
+
+.contactForm textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+@media (max-width: 768px) {
+  .contactContainer {
+    grid-template-columns: 1fr;
+  }
+}
